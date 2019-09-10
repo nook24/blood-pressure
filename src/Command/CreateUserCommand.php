@@ -50,6 +50,7 @@ class CreateUserCommand extends Command {
             $io->error(
                 __('Passwords are not the same')
             );
+            return 1;
         }
 
         /** @var UsersTable $UsersTable */
