@@ -35,7 +35,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('/node_modules/angular-route/angular-route.min.js') ?>
     <?= $this->Html->script('/js/ng.app.js') ?>
 
-
+    <?= $this->Html->script('/js/controller/MenuCtrl.js') ?>
 
     <?= $this->Html->script('/js/controller/MeasurementsIndexCtrl.js') ?>
 
@@ -48,8 +48,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 <body id="page-top">
     <div id="wrapper">
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" ng-controller="MenuCtrl">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -60,10 +60,17 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
             <hr class="sidebar-divider my-0">
 
-            <li class="nav-item active">
-                <a class="nav-link" href="#!Measurements">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+            <li class="nav-item" ng-class="{'active': isActive('/Measurements')}">
+                <a class="nav-link" ng-href="#!Measurements">
+                    <i class="fa fa-heartbeat"></i>
                     <span><?= __('Measurements') ?></span>
+                </a>
+            </li>
+
+            <li class="nav-item" ng-class="{'active': isActive('/Users')}">
+                <a class="nav-link" ng-href="#!Users">
+                    <i class="fa fa-user"></i>
+                    <span><?= __('Users') ?></span>
                 </a>
             </li>
 
@@ -75,6 +82,17 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link" href="/users/logout">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?= __('Logout') ?>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
                 </nav>
 
                 <div class="container-fluid">

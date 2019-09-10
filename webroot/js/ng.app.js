@@ -22,9 +22,17 @@ app.config(function ($httpProvider) {
 });
 
 app.config(function($routeProvider) {
-    
-    $routeProvider.when("/Measurements", {
-        templateUrl : "/Measurements/index.html",
-        controller: "MeasurementsIndexCtrl"
-    });
+
+    $routeProvider
+        .when("/Measurements", {
+            templateUrl : "/Measurements/index.html",
+            controller: "MeasurementsIndexCtrl"
+        })
+        .when("/Users", {
+            templateUrl : "/Users/index.html",
+            controller: "UsersIndexCtrl"
+        })
+        .otherwise({
+            redirectTo:'/Measurements'
+        });
 });
