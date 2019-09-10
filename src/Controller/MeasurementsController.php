@@ -5,6 +5,8 @@ namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
 use App\Lib\Api\ApiPaginator;
+use Cake\Http\Exception\MethodNotAllowedException;
+use Cake\Http\Exception\NotFoundException;
 
 class MeasurementsController extends AppController {
 
@@ -48,6 +50,28 @@ class MeasurementsController extends AppController {
         }
         $this->set('measurement', $entity);
         $this->viewBuilder()->setOption('serialize', ['measurement']);
+    }
+
+    public function delete(){
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+
+        $id = $this->request->getData('id');
+        
+        $MeasurementsTable = TableRegistry::getTableLocator()->get('Measurements');
+        if (!$MeasurementsTable->existsById($id)) {
+            throw new NotFoundException(__('Measurement not found'));
+        }
+        $measurement = $MeasurementsTable->get($id);
+        if ($MeasurementsTable->delete($measurement)) {
+            $this->set('success', true);
+            $this->viewBuilder()->setOption('serialize', ['success']);
+            return;
+        }
+        $this->response->statusCode(400);
+        $this->set('success', false);
+        $this->viewBuilder()->setOption('serialize', ['success']);
     }
 
 }

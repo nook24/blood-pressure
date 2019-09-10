@@ -71,13 +71,24 @@ class MeasurementsTable extends Table {
         return $validator;
     }
 
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function existsById($id) {
+        return $this->exists(['Measurements.id' => $id]);
+    }
+
+
     public function getMeasurementsIndex(ApiPaginator $ApiPaginator, int $userId) :array{
         $query = $this->find()
             ->where([
                 'Measurements.user_id' => $userId
+            ])
+            ->order([
+                'Measurements.created' => 'DESC'
             ]);
         return $this->paginate($query, $ApiPaginator);
     }
-
     
 }
