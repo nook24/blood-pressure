@@ -1,5 +1,10 @@
 loginApp.controller("LoginCtrl", function($scope, $http, $httpParamSerializerJQLike){
 
+
+    $scope.post = {
+        remember_me: 1
+    };
+
     $scope.loadCsrf = function(){
         $http.get("/users/login.json",
             {}

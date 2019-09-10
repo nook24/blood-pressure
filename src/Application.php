@@ -30,6 +30,7 @@ use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
+use Cake\Http\Middleware\EncryptedCookieMiddleware;
 
 /**
  * Application setup class.
@@ -81,6 +82,9 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         ]);
 
         // Load the authenticators, you want session first
+        $service->loadAuthenticator('Authentication.Cookie', [
+            'rememberMeField' => 'remember_me'
+        ]);
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', [
             'fields'   => $fields,
@@ -106,6 +110,12 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ->add(new AssetMiddleware([
                 'cacheTime' => Configure::read('Asset.cacheTime'),
             ]))
+
+            ->add(new EncryptedCookieMiddleware(
+                // Names of cookies to protect
+                ['secrets', 'protected', 'CookieAuth'],
+                Configure::read('Security.cookieKey')
+            ))
 
             //Add the authentication middleware
             //Response a 403 to .json requests and redirect .html requests to login page
