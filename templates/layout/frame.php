@@ -40,6 +40,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('/js/controller/MeasurementsIndexCtrl.js') ?>
 
     <?= $this->Html->script('/js/directives/NewMeasurementDirective.js') ?>
+    <?= $this->Html->script('/js/directives/PaginatorDirective.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

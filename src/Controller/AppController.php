@@ -84,6 +84,12 @@ class AppController extends Controller {
             }
             $serialize[] = '_csrfToken';
 
+            //Add Paginator info to json response
+            $paging = $this->viewBuilder()->getVar('paging');
+            if($paging !== null){
+                $serialize[] = 'paging';
+            }
+
             $this->viewBuilder()->setOption('serialize', $serialize);
         }
     }

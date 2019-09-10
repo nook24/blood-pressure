@@ -14,10 +14,8 @@
     </div>
 </div>
 
-
 <p class="mb-4">
-
-    {{msg}}
+    <?= __('Document your blood pressure measurement result...') ?>
 </p>
 
 <div class="card shadow mb-4">
@@ -52,6 +50,9 @@
                 </tbody>
             </table>
         </div>
+
+        <paginator paging="paging" click-action="changepage" ng-if="paging"></paginator>
+
     </div>
 </div>
 

@@ -5,6 +5,8 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use App\Lib\Traits\PaginationTrait;
+use App\Lib\Api\ApiPaginator;
 
 /**
  * Measurements Model
@@ -21,6 +23,9 @@ use Cake\Validation\Validator;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class MeasurementsTable extends Table {
+
+    use PaginationTrait;
+
     /**
      * Initialize method
      *
@@ -65,4 +70,14 @@ class MeasurementsTable extends Table {
 
         return $validator;
     }
+
+    public function getMeasurementsIndex(ApiPaginator $ApiPaginator, int $userId) :array{
+        $query = $this->find()
+            ->where([
+                'Measurements.user_id' => $userId
+            ]);
+        return $this->paginate($query, $ApiPaginator);
+    }
+
+    
 }
