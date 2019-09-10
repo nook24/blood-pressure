@@ -44,3 +44,6 @@ nbproject/*
 
 # NPM Files
 webroot/node_modules
+
+# Composer files
+composer.lock

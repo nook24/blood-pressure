@@ -36,10 +36,10 @@ sudo apt-get install php-intl php-mbstring php-xml php-mysql mysql-server
 
 ### Clone repository and install dependencies
 ```
-https://github.com/nook24/blood-pressure
+git clone https://github.com/nook24/blood-pressure.git
 cd blood-pressure
 
-composer update
+composer install
 
 
 cd webroot/
