@@ -1,0 +1,48 @@
+/**
+ * Licensed under MIT
+ */
+
+/* Fix validation stuff */
+.invalid-feedback {
+    display: block;
+    margin-top: 0;
+    font-size: inherit;
+    color: #e74a3b;
+}
+
+.has-error {
+    color: #d9534f;
+}
+
+.has-error .form-control {
+    border-color: #d9534f;
+}
+
+.has-error .error-feedback {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #d9534f;
+}
+
+/* Fix login screen */
+.bg-login-image {
+    background: url("/img/joel-filipe-WjnF1Tp-p3I-unsplash.jpg");
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-size: auto;
+    background-position: center;
+    background-size: cover;
+}
+
+#login-unsplash-credit {
+    position: absolute;
+    bottom: 5px;
+    margin-left: 15px;
+    color: #B3B3B3;
+    font-size: 80%;
+}
+
+#login-unsplash-credit a{
+    color: #DDD;;
+}
