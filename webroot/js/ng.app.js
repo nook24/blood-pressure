@@ -1,6 +1,6 @@
 var app = angular.module("BloodPressure", ["ngRoute"]);
 
-app.factory("httpRequestInterceptor", function ($rootScope) {
+app.factory("httpRequestInterceptor", function ($rootScope, $q) {
     return {
         response: function(result){
             if(result.data.hasOwnProperty('_csrfToken')){
@@ -13,6 +13,12 @@ app.factory("httpRequestInterceptor", function ($rootScope) {
                 config.headers['X-CSRF-Token'] = $rootScope._csrfToken;
             }
             return config;
+        },
+        responseError: function (rejection) {
+            if (rejection.status == 401) {
+                window.location = '/users/login';
+            }
+            return $q.reject(rejection);
         }
     };
 });
