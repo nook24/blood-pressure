@@ -149,7 +149,7 @@ class ApiPaginator {
 
     public function getPagination() {
         return [
-            'page'       => $this->page,
+            'page'       => (int)$this->page,
             'current'    => $this->current,
             'count'      => $this->count,
             'prevPage'   => $this->hasPrevPage(),
