@@ -38,6 +38,10 @@ app.config(function($routeProvider) {
             templateUrl : "/Users/index.html",
             controller: "UsersIndexCtrl"
         })
+        .when("/Users/add", {
+            templateUrl : "/Users/add.html",
+            controller: "UsersAddCtrl"
+        })
         .otherwise({
             redirectTo:'/Measurements'
         });

@@ -10,6 +10,8 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Security;
 use Cake\Validation\Validator;
+use App\Lib\Traits\PaginationTrait;
+use App\Lib\Api\ApiPaginator;
 
 /**
  * Users Model
@@ -24,6 +26,9 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
  */
 class UsersTable extends Table {
+
+    use PaginationTrait;
+
     /**
      * Initialize method
      *
@@ -36,6 +41,9 @@ class UsersTable extends Table {
         $this->setTable('users');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->hasMany('Measurements')
+            ->setDependent(true);
     }
 
     /**
@@ -105,5 +113,21 @@ class UsersTable extends Table {
         $rules->add($rules->isUnique(['username']));
 
         return $rules;
+    }
+
+        /**
+     * @param int $id
+     * @return bool
+     */
+    public function existsById($id) {
+        return $this->exists(['Users.id' => $id]);
+    }
+
+    public function getUsersIndex(ApiPaginator $ApiPaginator) :array{
+        $query = $this->find()
+            ->order([
+                'Users.id' => 'ASC'
+            ]);
+        return $this->paginate($query, $ApiPaginator);
     }
 }

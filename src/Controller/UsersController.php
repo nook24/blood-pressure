@@ -9,6 +9,10 @@ use Authentication\Authenticator\ResultInterface;
 use Authentication\Controller\Component\AuthenticationComponent;
 use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
+use App\Lib\Api\ApiPaginator;
+use Cake\Http\Exception\MethodNotAllowedException;
+use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Exception\ConflictException;
 
 /**
  * Class UsersController
@@ -58,6 +62,24 @@ class UsersController extends AppController {
         ]);
     }
 
+    public function index() {
+        if ($this->isHtmlRequest()) {
+            //Only ship html template
+            return;
+        }
+
+        $UsersTable = TableRegistry::getTableLocator()->get('Users');
+
+        $ApiPaginator = new ApiPaginator($this, $this->request);
+
+        $entities = $UsersTable->getUsersIndex($ApiPaginator);
+        $myself = $this->Authentication->getIdentity();
+
+        $this->set('users', $entities);
+        $this->set('myself', $myself->get('id'));
+        $this->viewBuilder()->setOption('serialize', ['users', 'myself']);
+    }
+
     public function add() {
         if($this->isHtmlRequest()){
             //Only ship html template
@@ -80,5 +102,35 @@ class UsersController extends AppController {
         }
         $this->set('user', $user);
         $this->viewBuilder()->setOption('serialize', ['user']);
+    }
+
+    public function delete(){
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+
+        $id = $this->request->getData('id');
+        
+        /** @var UsersTable $UsersTable */
+        $UsersTable = TableRegistry::getTableLocator()->get('Users');
+        if (!$UsersTable->existsById($id)) {
+            throw new NotFoundException(__('User not found'));
+        }
+
+        $myself = $this->Authentication->getIdentity();
+
+        if ($id == $myself->get('id')) {
+            throw new ConflictException(__('You can not delete yourself!'));
+        }
+
+        $user = $UsersTable->get($id);
+        if ($UsersTable->delete($user)) {
+            $this->set('success', true);
+            $this->viewBuilder()->setOption('serialize', ['success']);
+            return;
+        }
+        $this->response->statusCode(400);
+        $this->set('success', false);
+        $this->viewBuilder()->setOption('serialize', ['success']);
     }
 }

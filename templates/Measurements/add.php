@@ -25,7 +25,7 @@
                     </label>
                     <input type="number" class="form-control" id="systolic" min="0" placeholder="120"
                            ng-model="post.systolic">
-                    <div ng-repeat="error in errors.diastolic" class="error-feedback">
+                    <div ng-repeat="error in errors.systolic" class="error-feedback">
                         {{error}}
                     </div>
                 </div>

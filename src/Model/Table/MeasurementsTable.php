@@ -40,6 +40,8 @@ class MeasurementsTable extends Table {
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Users');
     }
 
     /**
