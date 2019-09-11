@@ -46,3 +46,8 @@
 #login-unsplash-credit a{
     color: #DDD;;
 }
+
+/* Misc */
+.text-bold {
+    font-weight: bold;
+}

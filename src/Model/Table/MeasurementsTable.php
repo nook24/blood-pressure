@@ -79,6 +79,17 @@ class MeasurementsTable extends Table {
         return $this->exists(['Measurements.id' => $id]);
     }
 
+    /**
+     * @param int $id
+     * @param int $userId
+     * @return bool
+     */
+    public function existsByIdAndUserId($id, $userId) {
+        return $this->exists([
+            'Measurements.id' => $id,
+            'Measurements.user_id' => $userId
+        ]);
+    }
 
     public function getMeasurementsIndex(ApiPaginator $ApiPaginator, int $userId) :array{
         $query = $this->find()

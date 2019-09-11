@@ -40,6 +40,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('/js/controller/MeasurementsIndexCtrl.js') ?>
 
     <?= $this->Html->script('/js/directives/NewMeasurementDirective.js') ?>
+    <?= $this->Html->script('/js/directives/EditMeasurementDirective.js') ?>
     <?= $this->Html->script('/js/directives/PaginatorDirective.js') ?>
 
     <?= $this->fetch('meta') ?>
@@ -48,11 +49,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 
 <body id="page-top">
-    <div id="wrapper">
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" ng-controller="MenuCtrl">
+    <div id="wrapper" ng-controller="MenuCtrl">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" ng-class="{'toggled': hideSidebar}">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class="fa fa-heart-o "></i>
                 </div>
                 <div class="sidebar-brand-text">
                     <?= __('Blood Pressure') ?>
@@ -80,7 +81,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3" ng-click="showOrHideSidebar()">
                         <i class="fa fa-bars"></i>
                     </button>
 
