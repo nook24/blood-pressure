@@ -46,7 +46,11 @@ app.config(function($routeProvider) {
             templateUrl : "/Users/edit.html",
             controller: "UsersEditCtrl"
         })
+        .when("/Dashboard", {
+            templateUrl : "/Dashboards/index.html",
+            controller: "DashboardsIndexCtrl"
+        })
         .otherwise({
-            redirectTo:'/Measurements'
+            redirectTo:'/Dashboard'
         });
 });

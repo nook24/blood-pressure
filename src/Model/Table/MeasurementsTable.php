@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -22,7 +23,8 @@ use App\Lib\Api\ApiPaginator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class MeasurementsTable extends Table {
+class MeasurementsTable extends Table
+{
 
     use PaginationTrait;
 
@@ -32,7 +34,8 @@ class MeasurementsTable extends Table {
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config): void {
+    public function initialize(array $config): void
+    {
         parent::initialize($config);
 
         $this->setTable('measurements');
@@ -50,7 +53,8 @@ class MeasurementsTable extends Table {
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator): Validator {
+    public function validationDefault(Validator $validator): Validator
+    {
         $validator
             ->nonNegativeInteger('id')
             ->allowEmptyString('id', 'create');
@@ -77,7 +81,8 @@ class MeasurementsTable extends Table {
      * @param int $id
      * @return bool
      */
-    public function existsById($id) {
+    public function existsById($id)
+    {
         return $this->exists(['Measurements.id' => $id]);
     }
 
@@ -86,14 +91,16 @@ class MeasurementsTable extends Table {
      * @param int $userId
      * @return bool
      */
-    public function existsByIdAndUserId($id, $userId) {
+    public function existsByIdAndUserId($id, $userId)
+    {
         return $this->exists([
             'Measurements.id' => $id,
             'Measurements.user_id' => $userId
         ]);
     }
 
-    public function getMeasurementsIndex(ApiPaginator $ApiPaginator, int $userId) :array{
+    public function getMeasurementsIndex(ApiPaginator $ApiPaginator, int $userId): array
+    {
         $query = $this->find()
             ->where([
                 'Measurements.user_id' => $userId
@@ -103,5 +110,24 @@ class MeasurementsTable extends Table {
             ]);
         return $this->paginate($query, $ApiPaginator);
     }
-    
+
+    public function getMeasurementsDashboard(int $start, int $end, int $userId): array
+    {
+        $query = $this->find()
+            ->where([
+                'Measurements.user_id' => $userId,
+                'Measurements.created <=' => date('Y-m-d H:i:s', $start),
+                'Measurements.created >=' => date('Y-m-d H:i:s', $end)
+            ])
+            ->order([
+                'Measurements.created' => 'asc'
+            ])
+            ->all();
+
+        if($query === null){
+            return [];
+        }
+
+        return $query->toArray();
+    }
 }

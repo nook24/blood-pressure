@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ship the main application layout to the browser
  *
@@ -10,6 +11,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
 <!DOCTYPE html>
 <html ng-app="BloodPressure">
+
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,10 +21,14 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?php //$this->Html->css('milligram.min.css') ?>
-    <?php //$this->Html->css('cake.css') ?>
+    <?php //$this->Html->css('milligram.min.css') 
+    ?>
+    <?php //$this->Html->css('cake.css') 
+    ?>
 
-    <?php // echo $this->Html->css('/node_modules/bootstrap/dist/css/bootstrap.min.css') ?>
+    <?php // echo $this->Html->css('/node_modules/bootstrap/dist/css/bootstrap.min.css') 
+    ?>
+    <?= $this->Html->css('/node_modules/chart.js/dist/Chart.min.css') ?>
     <?= $this->Html->css('/css/sb-admin-2.min.css') ?>
     <?= $this->Html->css('/node_modules/font-awesome/css/font-awesome.min.css') ?>
     <?= $this->Html->css('/css/app.css') ?>
@@ -30,6 +36,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->Html->script('/node_modules/jquery/dist/jquery.min.js') ?>
     <?= $this->Html->script('/node_modules/bootstrap/dist/js/bootstrap.min.js') ?>
+    <?= $this->Html->script('/node_modules/chart.js/dist/Chart.min.js') ?>
 
     <?= $this->Html->script('/node_modules/angular/angular.min.js') ?>
     <?= $this->Html->script('/node_modules/angular-route/angular-route.min.js') ?>
@@ -41,6 +48,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('/js/controller/UsersIndexCtrl.js') ?>
     <?= $this->Html->script('/js/controller/UsersAddCtrl.js') ?>
     <?= $this->Html->script('/js/controller/UsersEditCtrl.js') ?>
+    <?= $this->Html->script('/js/controller/DashboardsIndexCtrl.js') ?>
 
     <?= $this->Html->script('/js/directives/NewMeasurementDirective.js') ?>
     <?= $this->Html->script('/js/directives/EditMeasurementDirective.js') ?>
@@ -64,6 +72,15 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </a>
 
             <hr class="sidebar-divider my-0">
+
+            <li class="nav-item" ng-class="{'active': isActive('/Dashboard')}">
+                <a class="nav-link" ng-href="#!Dashboard">
+                    <i class="fa fa-dashboard"></i>
+                    <span><?= __('Dashboard') ?></span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider">
 
             <li class="nav-item" ng-class="{'active': isActive('/Measurements')}">
                 <a class="nav-link" ng-href="#!Measurements">
@@ -108,4 +125,5 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </div>
     </div>
 </body>
+
 </html>
