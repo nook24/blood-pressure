@@ -104,6 +104,42 @@ class UsersController extends AppController {
         $this->viewBuilder()->setOption('serialize', ['user']);
     }
 
+    public function edit($id = null) {
+        if ($this->isHtmlRequest()) {
+            //Only ship html template
+            return;
+        }
+
+        $UsersTable = TableRegistry::getTableLocator()->get('Users');
+
+        if(!$UsersTable->existsById($id)){
+            throw new NotFoundException(__('User not found'));
+        }
+
+        $user = $UsersTable->get($id);
+
+        if($this->request->is('get')){
+            $this->set('user', $user);
+            $this->viewBuilder()->setOption('serialize', ['user']);
+            return;
+        }
+
+        if($this->request->is('post')){
+            $user->setAccess('id', false);
+            $user = $UsersTable->patchEntity($user, $this->request->getData());
+
+            $UsersTable->save($user);
+            if ($user->hasErrors()) {
+                $this->response = $this->response->withStatus(400);
+                $this->set('error', $user->getErrors());
+                $this->viewBuilder()->setOption('serialize', ['error']);
+                return;
+            }
+            $this->set('user', $user);
+            $this->viewBuilder()->setOption('serialize', ['user']);
+        }
+    }
+
     public function delete(){
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();

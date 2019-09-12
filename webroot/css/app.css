@@ -51,3 +51,9 @@
 .text-bold {
     font-weight: bold;
 }
+
+.input-help {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+}

@@ -39,7 +39,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->Html->script('/js/controller/MeasurementsIndexCtrl.js') ?>
     <?= $this->Html->script('/js/controller/UsersIndexCtrl.js') ?>
-        <?= $this->Html->script('/js/controller/UsersAddCtrl.js') ?>
+    <?= $this->Html->script('/js/controller/UsersAddCtrl.js') ?>
+    <?= $this->Html->script('/js/controller/UsersEditCtrl.js') ?>
 
     <?= $this->Html->script('/js/directives/NewMeasurementDirective.js') ?>
     <?= $this->Html->script('/js/directives/EditMeasurementDirective.js') ?>

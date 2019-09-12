@@ -40,14 +40,14 @@
                     <tr ng-repeat="user in users">
                         <td>{{user.id}}</td>
                         <td>{{user.username}}</td>
-                        <td>{{user.first_name}}</td>
-                        <td>{{user.last_name}}</td>
+                        <td>{{user.firstname}}</td>
+                        <td>{{user.lastname}}</td>
                         <td>
 
-                            <button class="btn btn-sm btn-primary">
+                            <a class="btn btn-sm btn-primary" ng-href="/#!Users/edit/{{user.id}}">
                                 <i class="fa fa-pencil-square-o"></i>
                                 <?= __('Edit') ?>
-                            </button>
+                            </a>
                             <button class="btn btn-sm btn-danger" ng-click="askDeleteUser(user)" ng-show="user.id !== myself">
                                 <i class="fa fa-trash-o"></i>
                                 <?= __('Delete') ?>
