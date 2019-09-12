@@ -6,7 +6,8 @@ use Cake\ORM\Query;
 use App\Lib\Api\ApiPaginator;
 
 
-trait PaginationTrait{
+trait PaginationTrait
+{
 
 
     /**
@@ -14,7 +15,8 @@ trait PaginationTrait{
      * @param ApiPaginator $ApiPaginator
      * @return array
      */
-    public function paginate(Query $query, ApiPaginator $ApiPaginator) {
+    public function paginate(Query $query, ApiPaginator $ApiPaginator)
+    {
         $ApiPaginator->setCountResult($query->count());
         $query->offset($ApiPaginator->getOffset());
         $query->limit($ApiPaginator->getLimit());
@@ -28,11 +30,11 @@ trait PaginationTrait{
      * @param array|null $result
      * @return array
      */
-    public function emptyArrayIfNull($result) {
+    public function emptyArrayIfNull($result)
+    {
         if ($result === null) {
             return [];
         }
         return $result;
     }
-
 }

@@ -2,14 +2,14 @@ var app = angular.module("BloodPressure", ["ngRoute"]);
 
 app.factory("httpRequestInterceptor", function ($rootScope, $q) {
     return {
-        response: function(result){
-            if(result.data.hasOwnProperty('_csrfToken')){
+        response: function (result) {
+            if (result.data.hasOwnProperty('_csrfToken')) {
                 $rootScope._csrfToken = result.data._csrfToken;
             }
             return result || $.then(result)
         },
-        request: function (config){
-            if(config.method !== 'GET'){
+        request: function (config) {
+            if (config.method !== 'GET') {
                 config.headers['X-CSRF-Token'] = $rootScope._csrfToken;
             }
             return config;
@@ -27,30 +27,30 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('httpRequestInterceptor');
 });
 
-app.config(function($routeProvider) {
+app.config(function ($routeProvider) {
 
     $routeProvider
         .when("/Measurements", {
-            templateUrl : "/Measurements/index.html",
+            templateUrl: "/Measurements/index.html",
             controller: "MeasurementsIndexCtrl"
         })
         .when("/Users", {
-            templateUrl : "/Users/index.html",
+            templateUrl: "/Users/index.html",
             controller: "UsersIndexCtrl"
         })
         .when("/Users/add", {
-            templateUrl : "/Users/add.html",
+            templateUrl: "/Users/add.html",
             controller: "UsersAddCtrl"
         })
         .when("/Users/edit/:id", {
-            templateUrl : "/Users/edit.html",
+            templateUrl: "/Users/edit.html",
             controller: "UsersEditCtrl"
         })
         .when("/Dashboard", {
-            templateUrl : "/Dashboards/index.html",
+            templateUrl: "/Dashboards/index.html",
             controller: "DashboardsIndexCtrl"
         })
         .otherwise({
-            redirectTo:'/Dashboard'
+            redirectTo: '/Dashboard'
         });
 });

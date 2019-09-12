@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -25,7 +26,8 @@ use App\Lib\Api\ApiPaginator;
  * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
  */
-class UsersTable extends Table {
+class UsersTable extends Table
+{
 
     use PaginationTrait;
 
@@ -35,7 +37,8 @@ class UsersTable extends Table {
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config): void {
+    public function initialize(array $config): void
+    {
         parent::initialize($config);
 
         $this->setTable('users');
@@ -52,7 +55,8 @@ class UsersTable extends Table {
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator): Validator {
+    public function validationDefault(Validator $validator): Validator
+    {
         $validator
             ->nonNegativeInteger('id')
             ->allowEmptyString('id', 'create');
@@ -86,7 +90,8 @@ class UsersTable extends Table {
      * @param \ArrayObject $options
      * @return bool
      */
-    public function beforeSave(Event $event, EntityInterface $entity, \ArrayObject $options) {
+    public function beforeSave(Event $event, EntityInterface $entity, \ArrayObject $options)
+    {
         if ($entity->isDirty('password')) {
             $entity->password = $this->getPasswordHash($entity->password);
         }
@@ -97,7 +102,8 @@ class UsersTable extends Table {
      * @param $str
      * @return string
      */
-    public function getPasswordHash($str) {
+    public function getPasswordHash($str)
+    {
         $DefaultPasswordHasher = new DefaultPasswordHasher();
         return $DefaultPasswordHasher->hash($str);
     }
@@ -109,21 +115,24 @@ class UsersTable extends Table {
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules): RulesChecker {
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
         $rules->add($rules->isUnique(['username']));
 
         return $rules;
     }
 
-        /**
+    /**
      * @param int $id
      * @return bool
      */
-    public function existsById($id) {
+    public function existsById($id)
+    {
         return $this->exists(['Users.id' => $id]);
     }
 
-    public function getUsersIndex(ApiPaginator $ApiPaginator) :array{
+    public function getUsersIndex(ApiPaginator $ApiPaginator): array
+    {
         $query = $this->find()
             ->order([
                 'Users.id' => 'ASC'

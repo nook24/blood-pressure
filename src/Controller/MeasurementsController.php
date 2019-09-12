@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -8,9 +9,11 @@ use App\Lib\Api\ApiPaginator;
 use Cake\Http\Exception\MethodNotAllowedException;
 use Cake\Http\Exception\NotFoundException;
 
-class MeasurementsController extends AppController {
+class MeasurementsController extends AppController
+{
 
-    public function index() {
+    public function index()
+    {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -28,7 +31,8 @@ class MeasurementsController extends AppController {
         $this->viewBuilder()->setOption('serialize', ['measurements']);
     }
 
-    public function add() {
+    public function add()
+    {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -52,7 +56,8 @@ class MeasurementsController extends AppController {
     }
 
 
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -62,19 +67,19 @@ class MeasurementsController extends AppController {
 
         $MeasurementsTable = TableRegistry::getTableLocator()->get('Measurements');
 
-        if(!$MeasurementsTable->existsByIdAndUserId($id, $user->get('id'))){
+        if (!$MeasurementsTable->existsByIdAndUserId($id, $user->get('id'))) {
             throw new NotFoundException(__('Measurement not found'));
         }
 
         $measurement = $MeasurementsTable->get($id);
 
-        if($this->request->is('get')){
+        if ($this->request->is('get')) {
             $this->set('measurement', $measurement);
             $this->viewBuilder()->setOption('serialize', ['measurement']);
             return;
         }
 
-        if($this->request->is('post')){
+        if ($this->request->is('post')) {
             $measurement->setAccess('id', false);
             $measurement->setAccess('user_id', false);
             $measurement = $MeasurementsTable->patchEntity($measurement, $this->request->getData());
@@ -92,13 +97,14 @@ class MeasurementsController extends AppController {
     }
 
 
-    public function delete(){
+    public function delete()
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
 
         $id = $this->request->getData('id');
-        
+
         $MeasurementsTable = TableRegistry::getTableLocator()->get('Measurements');
         if (!$MeasurementsTable->existsById($id)) {
             throw new NotFoundException(__('Measurement not found'));
@@ -113,5 +119,4 @@ class MeasurementsController extends AppController {
         $this->set('success', false);
         $this->viewBuilder()->setOption('serialize', ['success']);
     }
-
 }

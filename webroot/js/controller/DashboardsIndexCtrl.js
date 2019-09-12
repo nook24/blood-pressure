@@ -165,7 +165,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
     var renderCalendar = function (events) {
         var calendarEle = document.getElementById('calendar');
 
-        var defaultView = $(window).width() < 765 ? 'listWeek':'dayGridMonth';
+        var defaultView = $(window).width() < 765 ? 'listWeek' : 'dayGridMonth';
 
         $scope.calendar = new FullCalendar.Calendar(calendarEle, {
             plugins: ['dayGrid', 'list'],
@@ -173,7 +173,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
             timeZone: 'UTC',
             defaultView: defaultView,
             events: events,
-            defaultDate: ($scope.startIsToday)?new Date():new Date($scope.start*1000),
+            defaultDate: ($scope.startIsToday) ? new Date() : new Date($scope.start * 1000),
             datesRender: function (info) {
                 if ($scope.calendarInit) {
                     $scope.calendarInit = false;
@@ -207,7 +207,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
         }).then(function (result) {
             renderChart(result.data.chartData);
 
-            if($scope.calendar !== null){
+            if ($scope.calendar !== null) {
                 $scope.calendar.destroy();
             }
             renderCalendar(result.data.events);

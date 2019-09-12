@@ -49,10 +49,10 @@ class DashboardsController extends AppController
             $chartData['diastolic'][] = $entity->get('diastolic');
 
             $classes = ['bg-success', 'border-success', 'text-white'];
-            if($entity->get('systolic') >= 130 && $entity->get('diastolic') >= 80){
+            if ($entity->get('systolic') >= 130 && $entity->get('diastolic') >= 80) {
                 $classes = ['bg-warning', 'border-warning', 'text-white'];
             }
-            if($entity->get('systolic') >= 140 && $entity->get('diastolic') >= 90){
+            if ($entity->get('systolic') >= 140 && $entity->get('diastolic') >= 90) {
                 $classes = ['bg-danger', 'border-danger', 'text-white'];
             }
 

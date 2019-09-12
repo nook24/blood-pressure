@@ -122,10 +122,10 @@ class MeasurementsTable extends Table
             ->order([
                 'Measurements.created' => 'asc'
             ]);
-            //dd($query);
-            $query->all();
+        //dd($query);
+        $query->all();
 
-        if($query === null){
+        if ($query === null) {
             return [];
         }
 

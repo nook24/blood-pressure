@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -19,14 +20,17 @@ use Cake\Http\Exception\ConflictException;
  * @package App\Controller
  * @property AuthenticationComponent $Authentication
  */
-class UsersController extends AppController {
+class UsersController extends AppController
+{
 
-    public function beforeFilter(EventInterface $event) {
+    public function beforeFilter(EventInterface $event)
+    {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated(['login']);
     }
 
-    public function login() {
+    public function login()
+    {
         $this->viewBuilder()->setLayout('login');
 
         if ($this->request->is('get')) {
@@ -55,14 +59,16 @@ class UsersController extends AppController {
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         $this->Authentication->logout();
         $this->redirect([
             'action' => 'login'
         ]);
     }
 
-    public function index() {
+    public function index()
+    {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -80,8 +86,9 @@ class UsersController extends AppController {
         $this->viewBuilder()->setOption('serialize', ['users', 'myself']);
     }
 
-    public function add() {
-        if($this->isHtmlRequest()){
+    public function add()
+    {
+        if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
         }
@@ -104,7 +111,8 @@ class UsersController extends AppController {
         $this->viewBuilder()->setOption('serialize', ['user']);
     }
 
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -112,19 +120,19 @@ class UsersController extends AppController {
 
         $UsersTable = TableRegistry::getTableLocator()->get('Users');
 
-        if(!$UsersTable->existsById($id)){
+        if (!$UsersTable->existsById($id)) {
             throw new NotFoundException(__('User not found'));
         }
 
         $user = $UsersTable->get($id);
 
-        if($this->request->is('get')){
+        if ($this->request->is('get')) {
             $this->set('user', $user);
             $this->viewBuilder()->setOption('serialize', ['user']);
             return;
         }
 
-        if($this->request->is('post')){
+        if ($this->request->is('post')) {
             $user->setAccess('id', false);
             $user = $UsersTable->patchEntity($user, $this->request->getData());
 
@@ -140,13 +148,14 @@ class UsersController extends AppController {
         }
     }
 
-    public function delete(){
+    public function delete()
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
 
         $id = $this->request->getData('id');
-        
+
         /** @var UsersTable $UsersTable */
         $UsersTable = TableRegistry::getTableLocator()->get('Users');
         if (!$UsersTable->existsById($id)) {

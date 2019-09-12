@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="BloodPressureLogin">
+
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,8 +31,9 @@
 </head>
 
 <body id="bg-gradient-primary">
-<div class="container" ng-controller="LoginCtrl">
-    <?= $this->fetch('content') ?>
-</div>
+    <div class="container" ng-controller="LoginCtrl">
+        <?= $this->fetch('content') ?>
+    </div>
 </body>
+
 </html>

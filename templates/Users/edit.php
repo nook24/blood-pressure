@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  */
@@ -16,14 +17,13 @@
 
 <div class="card shadow mb-4">
     <div class="card-body">
-        
+
         <form ng-submit="submit()">
             <div class="form-group" ng-class="{'has-error': errors.username}">
                 <label for="username" class="col-form-label">
                     <?= __('Username') ?>
                 </label>
-                <input type="text" class="form-control" id="username" 
-                        ng-model="post.username">
+                <input type="text" class="form-control" id="username" ng-model="post.username">
                 <div ng-repeat="error in errors.username" class="error-feedback">
                     {{error}}
                 </div>
@@ -33,8 +33,7 @@
                 <label for="firstname" class="col-form-label">
                     <?= __('First name') ?>
                 </label>
-                <input type="text" class="form-control" id="firstname"
-                        ng-model="post.firstname">
+                <input type="text" class="form-control" id="firstname" ng-model="post.firstname">
                 <div ng-repeat="error in errors.firstname" class="error-feedback">
                     {{error}}
                 </div>
@@ -44,8 +43,7 @@
                 <label for="lastname" class="col-form-label">
                     <?= __('Last name') ?>
                 </label>
-                <input type="text" class="form-control" id="lastname"
-                        ng-model="post.lastname" autocomplete="new-user">
+                <input type="text" class="form-control" id="lastname" ng-model="post.lastname" autocomplete="new-user">
                 <div ng-repeat="error in errors.lastname" class="error-feedback">
                     {{error}}
                 </div>
@@ -55,8 +53,7 @@
                 <label for="password" class="col-form-label">
                     <?= __('Password') ?>
                 </label>
-                <input type="password" class="form-control" id="password"
-                        ng-model="post.password" autocomplete="new-password">
+                <input type="password" class="form-control" id="password" ng-model="post.password" autocomplete="new-password">
                 <div ng-repeat="error in errors.password" class="error-feedback">
                     {{error}}
                 </div>
@@ -75,4 +72,3 @@
 
     </div>
 </div>
-
