@@ -116,13 +116,14 @@ class MeasurementsTable extends Table
         $query = $this->find()
             ->where([
                 'Measurements.user_id' => $userId,
-                'Measurements.created <=' => date('Y-m-d H:i:s', $start),
-                'Measurements.created >=' => date('Y-m-d H:i:s', $end)
+                'Measurements.created <=' => date('Y-m-d H:i:s', $end),
+                'Measurements.created >=' => date('Y-m-d H:i:s', $start)
             ])
             ->order([
                 'Measurements.created' => 'asc'
-            ])
-            ->all();
+            ]);
+            //dd($query);
+            $query->all();
 
         if($query === null){
             return [];

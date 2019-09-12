@@ -33,6 +33,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->css('/node_modules/font-awesome/css/font-awesome.min.css') ?>
     <?= $this->Html->css('/node_modules/@fullcalendar/core/main.min.css') ?>
     <?= $this->Html->css('/node_modules/@fullcalendar/daygrid/main.min.css') ?>
+    <?= $this->Html->css('/node_modules/@fullcalendar/list/main.min.css') ?>
     <?= $this->Html->css('/css/app.css') ?>
 
 
@@ -42,6 +43,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('/node_modules/chartjs-plugin-annotation/chartjs-plugin-annotation.min.js') ?>
     <?= $this->Html->script('/node_modules/@fullcalendar/core/main.min.js') ?>
     <?= $this->Html->script('/node_modules/@fullcalendar/daygrid/main.min.js') ?>
+    <?= $this->Html->script('/node_modules/@fullcalendar/list/main.min.js') ?>
 
     <?= $this->Html->script('/node_modules/angular/angular.min.js') ?>
     <?= $this->Html->script('/node_modules/angular-route/angular-route.min.js') ?>

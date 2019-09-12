@@ -1,9 +1,12 @@
 app.controller("DashboardsIndexCtrl", function ($scope, $http) {
 
-    $scope.start = Math.floor(Date.now() / 1000);
-    $scope.end = Math.floor($scope.start - (3600 * 24 * 31));
+    $scope.end = Math.floor(Date.now() / 1000);
+    $scope.start = Math.floor($scope.end - (3600 * 24 * 31));
+    $scope.startIsToday = true;
 
     $scope.chart = null;
+
+    $scope.calendar = null;
     $scope.calendarInit = true;
 
     var renderChart = function (chartData) {
@@ -161,11 +164,16 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
 
     var renderCalendar = function (events) {
         var calendarEle = document.getElementById('calendar');
+
+        var defaultView = $(window).width() < 765 ? 'listWeek':'dayGridMonth';
+
         $scope.calendar = new FullCalendar.Calendar(calendarEle, {
-            plugins: ['dayGrid'],
+            plugins: ['dayGrid', 'list'],
             height: 1000,
             timeZone: 'UTC',
+            defaultView: defaultView,
             events: events,
+            defaultDate: ($scope.startIsToday)?new Date():new Date($scope.start*1000),
             datesRender: function (info) {
                 if ($scope.calendarInit) {
                     $scope.calendarInit = false;
@@ -175,6 +183,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                 $scope.start = Math.floor(info.view.currentStart.getTime() / 1000);
                 $scope.end = Math.floor(info.view.currentEnd.getTime() / 1000);
                 $scope.calendarInit = true;
+                $scope.startIsToday = false;
                 $scope.load();
             }
         });
@@ -183,7 +192,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
     };
 
     $scope.update = function () {
-        $scope.start = Math.floor(Date.now() / 1000);
+        $scope.end = Math.floor(Date.now() / 1000);
 
         $scope.load();
     };
@@ -197,6 +206,10 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
             }
         }).then(function (result) {
             renderChart(result.data.chartData);
+
+            if($scope.calendar !== null){
+                $scope.calendar.destroy();
+            }
             renderCalendar(result.data.events);
         });
     };
