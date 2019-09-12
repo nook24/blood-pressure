@@ -23,8 +23,8 @@ class DashboardsController extends AppController
 
         $MeasurementsTable = TableRegistry::getTableLocator()->get('Measurements');
 
-        $start = (int)$this->request->getQuery('start');
-        $end = (int)$this->request->getQuery('end');
+        $start = (int) $this->request->getQuery('start');
+        $end = (int) $this->request->getQuery('end');
         if (!is_numeric($start) || $start < 10000) {
             $start = time();
         }
@@ -40,103 +40,39 @@ class DashboardsController extends AppController
             'systolic' => [],
             'diastolic' => []
         ];
+
+        //Calendar data
+        $events = [];
         foreach ($entities as $entity) {
             $chartData['labels'][] = $entity->get('created')->format('d.m.Y');
             $chartData['systolic'][] = $entity->get('systolic');
             $chartData['diastolic'][] = $entity->get('diastolic');
+
+            $classes = ['bg-success', 'border-success', 'text-white'];
+            if($entity->get('systolic') >= 130 && $entity->get('diastolic') >= 80){
+                $classes = ['bg-warning', 'border-warning', 'text-white'];
+            }
+            if($entity->get('systolic') >= 140 && $entity->get('diastolic') >= 90){
+                $classes = ['bg-danger', 'border-danger', 'text-white'];
+            }
+
+            $events[] = [
+                'id' => $entity->get('id'),
+                'title' => sprintf(
+                    '%s: %s/%s/%s',
+                    $entity->get('created')->format('H:i'),
+                    $entity->get('systolic'),
+                    $entity->get('diastolic'),
+                    $entity->get('heart_rate')
+                ),
+                'start' => gmdate('Y-m-d H:i:s', $entity->created->timestamp),
+                'classNames' => $classes
+            ];
         }
 
         $this->set('chartData', $chartData);
+        $this->set('events', $events);
 
-        $this->viewBuilder()->setOption('serialize', ['chartData']);
-    }
-
-    public function add()
-    {
-        if ($this->isHtmlRequest()) {
-            //Only ship html template
-            return;
-        }
-
-        $user = $this->Authentication->getIdentity();
-
-        $MeasurementsTable = TableRegistry::getTableLocator()->get('Measurements');
-        $entity = $MeasurementsTable->newEntity($this->request->getData());
-        $entity->set('user_id', $user->get('id'));
-
-        $MeasurementsTable->save($entity);
-        if ($entity->hasErrors()) {
-            $this->response = $this->response->withStatus(400);
-            $this->set('error', $entity->getErrors());
-            $this->viewBuilder()->setOption('serialize', ['error']);
-            return;
-        }
-        $this->set('measurement', $entity);
-        $this->viewBuilder()->setOption('serialize', ['measurement']);
-    }
-
-
-    public function edit($id = null)
-    {
-        if ($this->isHtmlRequest()) {
-            //Only ship html template
-            return;
-        }
-
-        $user = $this->Authentication->getIdentity();
-
-        $MeasurementsTable = TableRegistry::getTableLocator()->get('Measurements');
-
-        if (!$MeasurementsTable->existsByIdAndUserId($id, $user->get('id'))) {
-            throw new NotFoundException(__('Measurement not found'));
-        }
-
-        $measurement = $MeasurementsTable->get($id);
-
-        if ($this->request->is('get')) {
-            $this->set('measurement', $measurement);
-            $this->viewBuilder()->setOption('serialize', ['measurement']);
-            return;
-        }
-
-        if ($this->request->is('post')) {
-            $measurement->setAccess('id', false);
-            $measurement->setAccess('user_id', false);
-            $measurement = $MeasurementsTable->patchEntity($measurement, $this->request->getData());
-
-            $MeasurementsTable->save($measurement);
-            if ($measurement->hasErrors()) {
-                $this->response = $this->response->withStatus(400);
-                $this->set('error', $measurement->getErrors());
-                $this->viewBuilder()->setOption('serialize', ['error']);
-                return;
-            }
-            $this->set('measurement', $measurement);
-            $this->viewBuilder()->setOption('serialize', ['measurement']);
-        }
-    }
-
-
-    public function delete()
-    {
-        if (!$this->request->is('post')) {
-            throw new MethodNotAllowedException();
-        }
-
-        $id = $this->request->getData('id');
-
-        $MeasurementsTable = TableRegistry::getTableLocator()->get('Measurements');
-        if (!$MeasurementsTable->existsById($id)) {
-            throw new NotFoundException(__('Measurement not found'));
-        }
-        $measurement = $MeasurementsTable->get($id);
-        if ($MeasurementsTable->delete($measurement)) {
-            $this->set('success', true);
-            $this->viewBuilder()->setOption('serialize', ['success']);
-            return;
-        }
-        $this->response->statusCode(400);
-        $this->set('success', false);
-        $this->viewBuilder()->setOption('serialize', ['success']);
+        $this->viewBuilder()->setOption('serialize', ['chartData', 'events']);
     }
 }

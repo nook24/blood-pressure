@@ -31,12 +31,17 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->css('/node_modules/chart.js/dist/Chart.min.css') ?>
     <?= $this->Html->css('/css/sb-admin-2.min.css') ?>
     <?= $this->Html->css('/node_modules/font-awesome/css/font-awesome.min.css') ?>
+    <?= $this->Html->css('/node_modules/@fullcalendar/core/main.min.css') ?>
+    <?= $this->Html->css('/node_modules/@fullcalendar/daygrid/main.min.css') ?>
     <?= $this->Html->css('/css/app.css') ?>
 
 
     <?= $this->Html->script('/node_modules/jquery/dist/jquery.min.js') ?>
     <?= $this->Html->script('/node_modules/bootstrap/dist/js/bootstrap.min.js') ?>
     <?= $this->Html->script('/node_modules/chart.js/dist/Chart.min.js') ?>
+    <?= $this->Html->script('/node_modules/chartjs-plugin-annotation/chartjs-plugin-annotation.min.js') ?>
+    <?= $this->Html->script('/node_modules/@fullcalendar/core/main.min.js') ?>
+    <?= $this->Html->script('/node_modules/@fullcalendar/daygrid/main.min.js') ?>
 
     <?= $this->Html->script('/node_modules/angular/angular.min.js') ?>
     <?= $this->Html->script('/node_modules/angular-route/angular-route.min.js') ?>

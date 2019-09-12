@@ -4,16 +4,52 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
     $scope.end = Math.floor($scope.start - (3600 * 24 * 31));
 
     $scope.chart = null;
+    $scope.calendarInit = true;
+
     var renderChart = function (chartData) {
         var ctx = document.getElementById("chart");
 
-        if($scope.chart !== null){
+        if ($scope.chart !== null) {
             //Update chart
             $scope.chart.data.labels = chartData.labels;
-            $scope.chart.data.datasets[0].data  = chartData.systolic;
-            $scope.chart.data.datasets[1].data  = chartData.diastolic;
+            $scope.chart.data.datasets[0].data = chartData.systolic;
+            $scope.chart.data.datasets[1].data = chartData.diastolic;
             $scope.chart.update();
             return;
+        }
+
+        var maxSystolic = Math.max(...chartData.systolic);
+
+        var annotations = [];
+        if (maxSystolic >= 130) {
+            annotations.push({
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y-axis-0',
+                value: 130,
+                borderColor: 'rgba(246, 194, 62, 0.4)',
+                borderWidth: 4,
+                label: {
+                    enabled: true,
+                    content: 'Warning',
+                    backgroundColor: 'rgba(246, 194, 62, 0.4)',
+                }
+            });
+        }
+        if (maxSystolic >= 140) {
+            annotations.push({
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y-axis-0',
+                value: 140,
+                borderColor: 'rgba(231, 74, 59, 0.4)',
+                borderWidth: 4,
+                label: {
+                    enabled: true,
+                    content: 'Danger',
+                    backgroundColor: 'rgba(231, 74, 59, 0.4)',
+                }
+            });
         }
 
         $scope.chart = new Chart(ctx, {
@@ -115,13 +151,40 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                             return datasetLabel + ': ' + tooltipItem.yLabel + ' mmHg';
                         }
                     }
+                },
+                annotation: {
+                    annotations: annotations
                 }
             }
         });
     };
 
-    $scope.update = function(){
+    var renderCalendar = function (events) {
+        var calendarEle = document.getElementById('calendar');
+        $scope.calendar = new FullCalendar.Calendar(calendarEle, {
+            plugins: ['dayGrid'],
+            height: 1000,
+            timeZone: 'UTC',
+            events: events,
+            datesRender: function (info) {
+                if ($scope.calendarInit) {
+                    $scope.calendarInit = false;
+                    return;
+                }
+
+                $scope.start = Math.floor(info.view.currentStart.getTime() / 1000);
+                $scope.end = Math.floor(info.view.currentEnd.getTime() / 1000);
+                $scope.calendarInit = true;
+                $scope.load();
+            }
+        });
+
+        $scope.calendar.render();
+    };
+
+    $scope.update = function () {
         $scope.start = Math.floor(Date.now() / 1000);
+
         $scope.load();
     };
 
@@ -134,6 +197,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
             }
         }).then(function (result) {
             renderChart(result.data.chartData);
+            renderCalendar(result.data.events);
         });
     };
 
