@@ -51,7 +51,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                 scaleID: 'y-axis-0',
                 value: 130,
                 borderColor: 'rgba(246, 194, 62, 0.4)',
-                borderWidth: 4,
+                borderWidth: options.borderWidth,
                 label: {
                     enabled: true,
                     content: 'Warning',
@@ -66,7 +66,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                 scaleID: 'y-axis-0',
                 value: 140,
                 borderColor: 'rgba(231, 74, 59, 0.4)',
-                borderWidth: 4,
+                borderWidth: options.borderWidth,
                 label: {
                     enabled: true,
                     content: 'Danger',
@@ -82,7 +82,6 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                 datasets: [{
                     label: "Systolic",
                     borderWidth: options.borderWidth,
-
                     lineTension: 0.3,
                     backgroundColor: "rgba(78, 115, 223, 0.05)",
                     borderColor: "rgba(78, 115, 223, 1)",
@@ -99,8 +98,6 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                 {
                     label: "Diastolic",
                     borderWidth: options.borderWidth,
-
-
                     lineTension: 0.3,
                     backgroundColor: "rgba(107, 12, 151, 0.05)",
                     borderColor: "rgba(107, 12, 151, 1)",
