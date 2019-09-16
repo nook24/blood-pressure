@@ -59,8 +59,7 @@ class DashboardsController extends AppController
             $events[] = [
                 'id' => $entity->get('id'),
                 'title' => sprintf(
-                    '%s: %s/%s/%s',
-                    $entity->get('created')->format('H:i'),
+                    '%s/%s/%s',
                     $entity->get('systolic'),
                     $entity->get('diastolic'),
                     $entity->get('heart_rate')

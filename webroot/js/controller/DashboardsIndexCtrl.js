@@ -199,6 +199,11 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
             plugins: ['dayGrid', 'list'],
             height: 1000,
             timeZone: 'UTC',
+            eventTimeFormat: {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            },
             defaultView: defaultView,
             events: events,
             defaultDate: ($scope.startIsToday) ? new Date() : new Date($scope.start * 1000),
