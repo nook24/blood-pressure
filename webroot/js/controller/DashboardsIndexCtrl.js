@@ -12,6 +12,26 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
     var renderChart = function (chartData) {
         var ctx = document.getElementById("chart");
 
+        var isMobile = $(window).width() < 765;
+
+        var options = {
+            borderWidth: 3,
+            pointRadius: 3,
+            pointHoverRadius: 3,
+            pointHitRadius: 10,
+            pointBorderWidth: 2
+        };
+
+        if(isMobile){
+            var options = {
+                borderWidth: 1,
+                pointRadius: 1,
+                pointHoverRadius: 3,
+                pointHitRadius: 10,
+                pointBorderWidth: 1
+            };
+        }
+
         if ($scope.chart !== null) {
             //Update chart
             $scope.chart.data.labels = chartData.labels;
@@ -61,32 +81,37 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                 labels: chartData.labels,
                 datasets: [{
                     label: "Systolic",
+                    borderWidth: options.borderWidth,
+
                     lineTension: 0.3,
                     backgroundColor: "rgba(78, 115, 223, 0.05)",
                     borderColor: "rgba(78, 115, 223, 1)",
-                    pointRadius: 3,
+                    pointRadius: options.pointRadius,
                     pointBackgroundColor: "rgba(78, 115, 223, 1)",
                     pointBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHoverRadius: 3,
+                    pointHoverRadius: options.pointHoverRadius,
                     pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
                     pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHitRadius: 10,
-                    pointBorderWidth: 2,
-                    data: chartData.systolic
+                    pointHitRadius: options.pointHitRadius,
+                    pointBorderWidth: options.pointBorderWidth,
+                    data: chartData.systolic,
                 },
                 {
                     label: "Diastolic",
+                    borderWidth: options.borderWidth,
+
+
                     lineTension: 0.3,
                     backgroundColor: "rgba(107, 12, 151, 0.05)",
                     borderColor: "rgba(107, 12, 151, 1)",
-                    pointRadius: 3,
+                    pointRadius: options.pointRadius,
                     pointBackgroundColor: "rgba(107, 12, 151, 1)",
                     pointBorderColor: "rgba(107, 12, 151, 1)",
-                    pointHoverRadius: 3,
+                    pointHoverRadius: options.pointHoverRadius,
                     pointHoverBackgroundColor: "rgba(107, 12, 151, 1)",
                     pointHoverBorderColor: "rgba(107, 12, 151, 1)",
-                    pointHitRadius: 10,
-                    pointBorderWidth: 2,
+                    pointHitRadius: options.pointHitRadius,
+                    pointBorderWidth: options.pointBorderWidth,
                     data: chartData.diastolic
                 }],
             },
@@ -119,6 +144,9 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                             padding: 10,
                             // Include a dollar sign in the ticks
                             callback: function (value, index, values) {
+                                if(isMobile){
+                                    return value;
+                                }
                                 return value + ' mmHg';
                             }
                         },
@@ -132,7 +160,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                     }],
                 },
                 legend: {
-                    display: true
+                    display: !isMobile
                 },
                 tooltips: {
                     backgroundColor: "rgb(255,255,255)",
