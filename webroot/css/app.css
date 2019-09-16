@@ -61,3 +61,21 @@
 .margin-right-10{
     margin-right: 10px;
 }
+
+/* Card borders */
+.border-left-systolic {
+    border-left: .25rem solid rgba(78, 115, 223, 1) !important;
+}
+
+.border-left-diastolic {
+    border-left: .25rem solid rgba(107, 12, 151, 1) !important;
+}
+
+/* Card borders */
+.text-systolic {
+    color: rgba(78, 115, 223, 1);
+}
+
+.text-diastolic {
+    color: rgba(107, 12, 151, 1);
+}

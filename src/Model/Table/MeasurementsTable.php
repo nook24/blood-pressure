@@ -8,6 +8,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use App\Lib\Traits\PaginationTrait;
 use App\Lib\Api\ApiPaginator;
+use App\Model\Entity\Measurement;
 
 /**
  * Measurements Model
@@ -130,5 +131,18 @@ class MeasurementsTable extends Table
         }
 
         return $query->toArray();
+    }
+
+    public function getLastMeasurement(int $userId): ?Measurement
+    {
+        $query = $this->find()
+            ->where([
+                'Measurements.user_id' => $userId,
+            ])
+            ->order([
+                'Measurements.id' => 'DESC'
+            ])
+            ->limit(1);
+        return $query->first();
     }
 }

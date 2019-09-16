@@ -239,6 +239,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
             }
         }).then(function (result) {
             renderChart(result.data.chartData);
+            $scope.lastMeasurement = result.data.lastMeasurement;
 
             if ($scope.calendar !== null) {
                 $scope.calendar.destroy();

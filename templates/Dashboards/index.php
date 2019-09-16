@@ -27,6 +27,67 @@
     </span>
 </p>
 
+<p class="mb-4">
+    <?= __('Last measurement') ?>
+    -
+    {{lastMeasurement.created | date : 'HH:mm dd.MM.yyyy'}}
+</p>
+<div class="row">
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card border-left-systolic shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-systolic mb-1">
+                            <?= __('Systolic') ?>
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{lastMeasurement.systolic}}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card border-left-diastolic shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-diastolic mb-1">
+                            <?= __('Diastolic') ?>
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{lastMeasurement.diastolic}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info mb-1">
+                            <?= __('Heart rate') ?>
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{lastMeasurement.heart_rate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <div class="card shadow mb-4">

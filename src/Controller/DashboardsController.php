@@ -69,9 +69,12 @@ class DashboardsController extends AppController
             ];
         }
 
+        $lastMeasurement = $MeasurementsTable->getLastMeasurement($user->get('id'));
+
         $this->set('chartData', $chartData);
         $this->set('events', $events);
+        $this->set('lastMeasurement', $lastMeasurement);
 
-        $this->viewBuilder()->setOption('serialize', ['chartData', 'events']);
+        $this->viewBuilder()->setOption('serialize', ['chartData', 'events', 'lastMeasurement']);
     }
 }
