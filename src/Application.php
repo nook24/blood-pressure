@@ -31,6 +31,7 @@ use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
+use DateTime;
 
 /**
  * Application setup class.
@@ -82,8 +83,13 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         ]);
 
         // Load the authenticators, you want session first
+        $expireAt = new DateTime();
+        $expireAt->setTimestamp(time() + (3600 * 24 * 31)); // In one month
         $service->loadAuthenticator('Authentication.Cookie', [
-            'rememberMeField' => 'remember_me'
+            'rememberMeField' => 'remember_me',
+            'cookie' => [
+              'expire' => $expireAt
+            ]
         ]);
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', [
