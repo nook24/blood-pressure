@@ -18,7 +18,9 @@ But due to the migration process my blood pressure raised from time to time^^
 
 - [CakePHP](https://github.com/cakephp/cakephp) 4.x-dev
     - [Authentication](https://book.cakephp.org/authentication/1.1/en/)
+    - [CakePdf](https://github.com/FriendsOfCake/CakePdf)
 - [AngularJS](https://angularjs.org/)
+- [Chart.js](https://www.chartjs.org/)
 - [Bootstrap 4](https://github.com/twbs/bootstrap)
     - [startbootstrap-sb-admin-2](https://github.com/BlackrockDigital/startbootstrap-sb-admin-2)
 
