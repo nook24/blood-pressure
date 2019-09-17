@@ -1,4 +1,4 @@
-app.controller("MeasurementsIndexCtrl", function ($scope, $http) {
+app.controller("MeasurementsIndexCtrl", function ($scope, $http, $httpParamSerializer) {
     $scope.currentPage = 1;
 
     var measurementToDelete = null;
@@ -49,6 +49,16 @@ app.controller("MeasurementsIndexCtrl", function ($scope, $http) {
             $scope.currentPage = page;
             $scope.load();
         }
+    };
+
+    $scope.linkForPdf = function(){
+
+        var baseUrl = '/measurements/index.pdf?';
+
+        return baseUrl + $httpParamSerializer({
+            page: $scope.currentPage
+        });
+
     };
 
     //Fire on page load

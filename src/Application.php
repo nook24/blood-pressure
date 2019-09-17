@@ -48,6 +48,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         parent::bootstrap();
         $this->addPlugin('Authentication');
 
+        $this->addPlugin('CakePdf');
+
         if (PHP_SAPI === 'cli') {
             $this->bootstrapCli();
         }

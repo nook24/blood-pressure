@@ -77,6 +77,14 @@ class AppController extends Controller
     }
 
     /**
+     * @return bool
+     */
+    protected function isPdfRequest(): bool
+    {
+        return $this->request->getParam('_ext') === 'pdf';
+    }
+
+    /**
      * Add CSRF token to all .json requests
      */
     public function beforeRender(EventInterface $event)

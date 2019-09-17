@@ -28,6 +28,18 @@ class MeasurementsController extends AppController
         $entities = $MeasurementsTable->getMeasurementsIndex($ApiPaginator, $user->get('id'));
         $this->set('measurements', $entities);
 
+        if ($this->isPdfRequest()) {
+            $this->viewBuilder()->setOption(
+                'pdfConfig',
+                [
+                    'download' => true,
+                    'filename' => __('Measurements_') . date('d.m.y')
+                ]
+            );
+            return;
+        }
+
+        //Set data for .json request
         $this->viewBuilder()->setOption('serialize', ['measurements']);
     }
 

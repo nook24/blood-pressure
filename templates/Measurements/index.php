@@ -2,7 +2,6 @@
 
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Measurement[]|\Cake\Collection\CollectionInterface $measurements
  */
 ?>
 
@@ -12,6 +11,12 @@
     </div>
     <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
         <new-measurement callback="load"></new-measurement>
+        <a ng-href="{{linkForPdf()}}" class="btn btn-sm btn-primary btn-icon-split float-right margin-right-10">
+            <span class="icon text-gray-600">
+                <i class="fa fa-download"></i>
+            </span>
+            <span class="text"><?= __('Download as PDF') ?></span>
+        </a>
     </div>
 </div>
 

@@ -45,7 +45,7 @@ use Cake\Routing\RouteBuilder;
 /** @var \Cake\Routing\RouteBuilder $routes */
 $routes->setRouteClass(DashedRoute::class);
 
-$routes->setExtensions(['json', 'html']);
+$routes->setExtensions(['json', 'html', 'pdf']);
 
 $routes->scope('/', function (RouteBuilder $builder) {
     // Register scoped middleware for in scopes.

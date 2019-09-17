@@ -9,6 +9,7 @@
         "cakephp/authentication": "2.x-dev",
         "cakephp/cakephp": "4.x-dev",
         "cakephp/plugin-installer": "^1.0",
+        "friendsofcake/cakepdf": "dev-cake-4.x",
         "mobiledetect/mobiledetectlib": "2.*"
     },
     "require-dev": {
