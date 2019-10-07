@@ -25,7 +25,11 @@ class AppAuthenticationMiddleware extends AuthenticationMiddleware implements Mi
             $header = $header[0];
         }
         $isJson = $header === 'application/json';
-
+        if(!$isJson){
+            //Search URL for .json
+            $url = $request->getUri();
+            $isJson = mb_substr($url->getPath(), -5) === '.json';
+        }
         $isRedirect = $response->getHeader('Location') !== null;
         if ($isJson && $isRedirect) {
             $response = $response->withoutHeader('Location');

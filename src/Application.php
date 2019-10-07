@@ -127,9 +127,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
             //Add the authentication middleware
             //Response a 403 to .json requests and redirect .html requests to login page
-            ->add(new AppAuthenticationMiddleware($this, [
-                //'unauthenticatedRedirect' => '/users/login'
-            ]))
+            ->add(new AppAuthenticationMiddleware($this, []))
 
             // Add routing middleware.
             // If you have a large number of routes connected, turning on routes
