@@ -50,7 +50,9 @@ $routes->setExtensions(['json', 'html', 'pdf']);
 $routes->scope('/', function (RouteBuilder $builder) {
     // Register scoped middleware for in scopes.
     $builder->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-        'httpOnly' => true,
+        'cookieName' => 'cookieName',
+        'field'      => '_csrfToken',
+        'httpOnly'   => false,
     ]));
 
     /**

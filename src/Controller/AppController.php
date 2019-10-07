@@ -90,7 +90,7 @@ class AppController extends Controller
     public function beforeRender(EventInterface $event)
     {
         if ($this->isJsonRequest()) {
-            $this->set('_csrfToken', $this->request->getParam('_csrfToken'));
+            $this->set('_csrfToken', $this->request->getAttribute('csrfToken'));
 
             $serialize = $this->viewBuilder()->getOption('serialize');
             if ($serialize === null) {

@@ -21,17 +21,16 @@ use App\Middleware\AppAuthenticationMiddleware;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
-use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
+use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-use Psr\Http\Message\ServerRequestInterface;
-use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use DateTime;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Application setup class.
@@ -72,7 +71,9 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
      * @return \Authentication\AuthenticationServiceInterface
      */
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface {
-        $service = new AuthenticationService();
+        $service = new AuthenticationService([
+            'unauthenticatedRedirect' => '/users/login'
+        ]);
 
         $fields = [
             'username' => 'username',
@@ -89,8 +90,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $expireAt->setTimestamp(time() + (3600 * 24 * 31)); // In one month
         $service->loadAuthenticator('Authentication.Cookie', [
             'rememberMeField' => 'remember_me',
-            'cookie' => [
-              'expire' => $expireAt
+            'cookie'          => [
+                'expire' => $expireAt
             ]
         ]);
         $service->loadAuthenticator('Authentication.Session');
@@ -118,9 +119,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ->add(new AssetMiddleware([
                 'cacheTime' => Configure::read('Asset.cacheTime'),
             ]))
-
             ->add(new EncryptedCookieMiddleware(
-                // Names of cookies to protect
+            // Names of cookies to protect
                 ['secrets', 'protected', 'CookieAuth'],
                 Configure::read('Security.cookieKey')
             ))
@@ -128,7 +128,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             //Add the authentication middleware
             //Response a 403 to .json requests and redirect .html requests to login page
             ->add(new AppAuthenticationMiddleware($this, [
-                'unauthenticatedRedirect' => '/users/login'
+                //'unauthenticatedRedirect' => '/users/login'
             ]))
 
             // Add routing middleware.
