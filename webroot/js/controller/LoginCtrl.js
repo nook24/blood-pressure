@@ -1,21 +1,25 @@
-loginApp.controller("LoginCtrl", function ($scope, $http, $httpParamSerializerJQLike) {
+loginApp.controller("LoginCtrl", function($scope, $http, $httpParamSerializerJQLike){
 
 
     $scope.post = {
         remember_me: 1
     };
 
-    $scope.loadCsrf = function () {
+    $scope.loadCsrf = function(){
         $http.get("/users/login.json",
             {}
-        ).then(function (result) {
+        ).then(function(result){
             $scope._csrfToken = result.data._csrfToken;
-        }, function errorCallback(result) {
-            console.log('Could not load _csrfToken');
+        }, function errorCallback(result){
+            if(result.data.hasOwnProperty('_csrfToken')){
+                $scope._csrfToken = result.data._csrfToken;
+            }else{
+                console.log('Could not load _csrfToken');
+            }
         });
     };
 
-    $scope.submit = function () {
+    $scope.submit = function(){
 
         //Submit as classic form (not as json data) so that
         //CakePHPs FormAuthenticator is able to parse the POST data
@@ -34,7 +38,7 @@ loginApp.controller("LoginCtrl", function ($scope, $http, $httpParamSerializerJQ
             data: $httpParamSerializerJQLike($scope.post)
         };
 
-        $http(req).then(function () {
+        $http(req).then(function(){
             new Noty({
                 theme: 'metroui',
                 type: 'success',
@@ -43,7 +47,7 @@ loginApp.controller("LoginCtrl", function ($scope, $http, $httpParamSerializerJQ
                 timeout: 3500
             }).show();
             window.location = '/';
-        }, function () {
+        }, function(){
             $scope.loadCsrf();
             new Noty({
                 theme: 'metroui',
