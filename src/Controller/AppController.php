@@ -29,8 +29,7 @@ use Cake\Event\EventInterface;
  *
  * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
-{
+class AppController extends Controller {
 
     /**
      * Initialization hook method.
@@ -43,8 +42,7 @@ class AppController extends Controller
      * @throws \Exception
      *
      */
-    public function initialize(): void
-    {
+    public function initialize(): void {
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
@@ -63,32 +61,28 @@ class AppController extends Controller
     /**
      * @return bool
      */
-    protected function isHtmlRequest(): bool
-    {
+    protected function isHtmlRequest(): bool {
         return $this->request->getParam('_ext') === 'html';
     }
 
     /**
      * @return bool
      */
-    protected function isJsonRequest(): bool
-    {
+    protected function isJsonRequest(): bool {
         return $this->request->getParam('_ext') === 'json';
     }
 
     /**
      * @return bool
      */
-    protected function isPdfRequest(): bool
-    {
+    protected function isPdfRequest(): bool {
         return $this->request->getParam('_ext') === 'pdf';
     }
 
     /**
      * Add CSRF token to all .json requests
      */
-    public function beforeRender(EventInterface $event)
-    {
+    public function beforeRender(EventInterface $event) {
         if ($this->isJsonRequest()) {
             $this->set('_csrfToken', $this->request->getAttribute('csrfToken'));
 

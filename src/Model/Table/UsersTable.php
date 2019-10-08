@@ -45,6 +45,8 @@ class UsersTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->addBehavior('Acl.Acl', ['requester']);
+
         $this->hasMany('Measurements')
             ->setDependent(true);
     }

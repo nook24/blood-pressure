@@ -18,15 +18,24 @@ declare(strict_types=1);
 namespace App;
 
 use App\Middleware\AppAuthenticationMiddleware;
+use App\Policy\RequestPolicy;
+use App\Resolver\AclResolver;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Middleware\RequestAuthorizationMiddleware;
+use Authorization\Policy\MapResolver;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\MiddlewareQueue;
+use Cake\Http\ServerRequest;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use DateTime;
@@ -38,14 +47,17 @@ use Psr\Http\Message\ServerRequestInterface;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication implements AuthenticationServiceProviderInterface {
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface {
     /**
      * {@inheritDoc}
      */
     public function bootstrap(): void {
         // Call parent to load bootstrap from files.
         parent::bootstrap();
+
+        $this->addPlugin('Acl');
         $this->addPlugin('Authentication');
+        $this->addPlugin('Authorization');
 
         $this->addPlugin('CakePdf');
 
@@ -67,8 +79,9 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     /**
      * Returns a service provider instance.
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request Request
-     * @return \Authentication\AuthenticationServiceInterface
+     * @param ServerRequestInterface $request
+     * @return AuthenticationServiceInterface
+     * @throws \Exception
      */
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface {
         $service = new AuthenticationService([
@@ -105,6 +118,16 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     }
 
     /**
+     * @param ServerRequestInterface $request
+     * @return AuthorizationServiceInterface
+     */
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface {
+        $mapResolver = new MapResolver();
+        $mapResolver->map(ServerRequest::class, RequestPolicy::class);
+        return new AuthorizationService($mapResolver);
+    }
+
+    /**
      * Setup the middleware queue your application will use.
      *
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
@@ -133,13 +156,18 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'htmlUnauthenticatedRedirect' => '/users/login'
             ]))
 
+
             // Add routing middleware.
             // If you have a large number of routes connected, turning on routes
             // caching in production could improve performance. For that when
             // creating the middleware instance specify the cache config name by
             // using it's second constructor argument:
             // `new RoutingMiddleware($this, '_cake_routes_')`
-            ->add(new RoutingMiddleware($this));
+            ->add(new RoutingMiddleware($this))
+
+
+            ->add(new AuthorizationMiddleware($this))
+            ->add(new RequestAuthorizationMiddleware());
 
         return $middlewareQueue;
     }
