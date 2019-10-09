@@ -18,6 +18,11 @@ class PagesController extends AppController {
         return;
     }
 
+    public function error403() {
+        //Only ship html template
+        return;
+    }
+
     public function csrf() {
         if (!$this->isJsonRequest()) {
             throw new MethodNotAllowedException();

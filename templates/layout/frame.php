@@ -50,6 +50,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('/js/ng.app.js') ?>
 
     <?= $this->Html->script('/js/controller/MenuCtrl.js') ?>
+    <?= $this->Html->script('/js/controller/Error403Ctrl.js') ?>
 
     <?= $this->Html->script('/js/controller/MeasurementsIndexCtrl.js') ?>
 

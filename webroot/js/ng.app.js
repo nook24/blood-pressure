@@ -1,6 +1,6 @@
 var app = angular.module("BloodPressure", ["ngRoute"]);
 
-app.factory("httpRequestInterceptor", function($rootScope, $q){
+app.factory("httpRequestInterceptor", function($rootScope, $q, $location){
     return {
         response: function(result){
             if(result.data.hasOwnProperty('_csrfToken')){
@@ -18,6 +18,9 @@ app.factory("httpRequestInterceptor", function($rootScope, $q){
             if(rejection.status == 401){
                 window.location = '/users/login';
             }
+            if(rejection.status == 403){
+                $location.path('/403');
+            }
             return $q.reject(rejection);
         }
     };
@@ -30,6 +33,11 @@ app.config(function($httpProvider){
 app.config(function($routeProvider){
 
     $routeProvider
+        .when("/403", {
+            templateUrl: "/Pages/error403.html",
+            controller: "Error403Ctrl"
+        })
+
         .when("/Measurements", {
             templateUrl: "/Measurements/index.html",
             controller: "MeasurementsIndexCtrl"

@@ -42,7 +42,8 @@ class AclDependencies {
         // Add actions that should always be allowed.
         $this
             ->allow('Pages', 'index')
-            ->allow('Pages', ' paginator')
+            ->allow('Pages', 'paginator')
+            ->allow('Pages', 'error403')
             ->allow('Pages', 'csrf')
             ->allow('Users', 'login')
             ->allow('Users', 'logout');
