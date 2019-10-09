@@ -53,7 +53,8 @@
                 <label for="password" class="col-form-label">
                     <?= __('Password') ?>
                 </label>
-                <input type="password" class="form-control" id="password" ng-model="post.password" autocomplete="new-password">
+                <input type="password" class="form-control" id="password" ng-model="post.password"
+                       autocomplete="new-password">
                 <div ng-repeat="error in errors.password" class="error-feedback">
                     {{error}}
                 </div>

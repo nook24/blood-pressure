@@ -1,4 +1,4 @@
-app.controller("DashboardsIndexCtrl", function ($scope, $http) {
+app.controller("DashboardsIndexCtrl", function($scope, $http){
 
     $scope.end = Math.floor(Date.now() / 1000);
     $scope.start = Math.floor($scope.end - (3600 * 24 * 31));
@@ -9,7 +9,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
     $scope.calendar = null;
     $scope.calendarInit = true;
 
-    var renderChart = function (chartData) {
+    var renderChart = function(chartData){
         var ctx = document.getElementById("chart");
 
         var isMobile = $(window).width() < 765;
@@ -32,7 +32,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
             };
         }
 
-        if ($scope.chart !== null) {
+        if($scope.chart !== null){
             //Update chart
             $scope.chart.data.labels = chartData.labels;
             $scope.chart.data.datasets[0].data = chartData.systolic;
@@ -44,7 +44,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
         var maxSystolic = Math.max(...chartData.systolic);
 
         var annotations = [];
-        if (maxSystolic >= 130) {
+        if(maxSystolic >= 130){
             annotations.push({
                 type: 'line',
                 mode: 'horizontal',
@@ -59,7 +59,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                 }
             });
         }
-        if (maxSystolic >= 140) {
+        if(maxSystolic >= 140){
             annotations.push({
                 type: 'line',
                 mode: 'horizontal',
@@ -95,22 +95,22 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                     pointBorderWidth: options.pointBorderWidth,
                     data: chartData.systolic,
                 },
-                {
-                    label: "Diastolic",
-                    borderWidth: options.borderWidth,
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(107, 12, 151, 0.05)",
-                    borderColor: "rgba(107, 12, 151, 1)",
-                    pointRadius: options.pointRadius,
-                    pointBackgroundColor: "rgba(107, 12, 151, 1)",
-                    pointBorderColor: "rgba(107, 12, 151, 1)",
-                    pointHoverRadius: options.pointHoverRadius,
-                    pointHoverBackgroundColor: "rgba(107, 12, 151, 1)",
-                    pointHoverBorderColor: "rgba(107, 12, 151, 1)",
-                    pointHitRadius: options.pointHitRadius,
-                    pointBorderWidth: options.pointBorderWidth,
-                    data: chartData.diastolic
-                }],
+                    {
+                        label: "Diastolic",
+                        borderWidth: options.borderWidth,
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(107, 12, 151, 0.05)",
+                        borderColor: "rgba(107, 12, 151, 1)",
+                        pointRadius: options.pointRadius,
+                        pointBackgroundColor: "rgba(107, 12, 151, 1)",
+                        pointBorderColor: "rgba(107, 12, 151, 1)",
+                        pointHoverRadius: options.pointHoverRadius,
+                        pointHoverBackgroundColor: "rgba(107, 12, 151, 1)",
+                        pointHoverBorderColor: "rgba(107, 12, 151, 1)",
+                        pointHitRadius: options.pointHitRadius,
+                        pointBorderWidth: options.pointBorderWidth,
+                        data: chartData.diastolic
+                    }],
             },
             options: {
                 maintainAspectRatio: false,
@@ -140,7 +140,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                             maxTicksLimit: 5,
                             padding: 10,
                             // Include a dollar sign in the ticks
-                            callback: function (value, index, values) {
+                            callback: function(value, index, values){
                                 if(isMobile){
                                     return value;
                                 }
@@ -174,7 +174,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
                     mode: 'index',
                     caretPadding: 10,
                     callbacks: {
-                        label: function (tooltipItem, chart) {
+                        label: function(tooltipItem, chart){
                             var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
                             return datasetLabel + ': ' + tooltipItem.yLabel + ' mmHg';
                         }
@@ -187,7 +187,7 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
         });
     };
 
-    var renderCalendar = function (events) {
+    var renderCalendar = function(events){
         var calendarEle = document.getElementById('calendar');
 
         var defaultView = $(window).width() < 765 ? 'listWeek' : 'dayGridMonth';
@@ -204,8 +204,8 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
             defaultView: defaultView,
             events: events,
             defaultDate: ($scope.startIsToday) ? new Date() : new Date($scope.start * 1000),
-            datesRender: function (info) {
-                if ($scope.calendarInit) {
+            datesRender: function(info){
+                if($scope.calendarInit){
                     $scope.calendarInit = false;
                     return;
                 }
@@ -221,24 +221,24 @@ app.controller("DashboardsIndexCtrl", function ($scope, $http) {
         $scope.calendar.render();
     };
 
-    $scope.update = function () {
+    $scope.update = function(){
         $scope.end = Math.floor(Date.now() / 1000);
 
         $scope.load();
     };
 
 
-    $scope.load = function () {
+    $scope.load = function(){
         $http.get("/dashboards/index.json", {
             params: {
                 start: $scope.start,
                 end: $scope.end
             }
-        }).then(function (result) {
+        }).then(function(result){
             renderChart(result.data.chartData);
             $scope.lastMeasurement = result.data.lastMeasurement;
 
-            if ($scope.calendar !== null) {
+            if($scope.calendar !== null){
                 $scope.calendar.destroy();
             }
             renderCalendar(result.data.events);

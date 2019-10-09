@@ -30,31 +30,32 @@
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
-                    <tr>
-                        <th scope="col"><?= __('#') ?></th>
-                        <th scope="col"><?= __('Username') ?></th>
-                        <th scope="col"><?= __('First name') ?></th>
-                        <th scope="col"><?= __('Last name') ?></th>
-                        <th scope="col"><?= __('Actions') ?></th>
+                <tr>
+                    <th scope="col"><?= __('#') ?></th>
+                    <th scope="col"><?= __('Username') ?></th>
+                    <th scope="col"><?= __('First name') ?></th>
+                    <th scope="col"><?= __('Last name') ?></th>
+                    <th scope="col"><?= __('Actions') ?></th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="user in users">
-                        <td>{{user.id}}</td>
-                        <td>{{user.username}}</td>
-                        <td>{{user.firstname}}</td>
-                        <td>{{user.lastname}}</td>
-                        <td>
+                <tr ng-repeat="user in users">
+                    <td>{{user.id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.firstname}}</td>
+                    <td>{{user.lastname}}</td>
+                    <td>
 
-                            <a class="btn btn-sm btn-primary" ng-href="/#!Users/edit/{{user.id}}">
-                                <i class="fa fa-pencil-square-o"></i>
-                                <?= __('Edit') ?>
-                            </a>
-                            <button class="btn btn-sm btn-danger" ng-click="askDeleteUser(user)" ng-show="user.id !== myself">
-                                <i class="fa fa-trash-o"></i>
-                                <?= __('Delete') ?>
-                            </button>
-                        </td>
-                    </tr>
+                        <a class="btn btn-sm btn-primary" ng-href="/#!Users/edit/{{user.id}}">
+                            <i class="fa fa-pencil-square-o"></i>
+                            <?= __('Edit') ?>
+                        </a>
+                        <button class="btn btn-sm btn-danger" ng-click="askDeleteUser(user)"
+                                ng-show="user.id !== myself">
+                            <i class="fa fa-trash-o"></i>
+                            <?= __('Delete') ?>
+                        </button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>

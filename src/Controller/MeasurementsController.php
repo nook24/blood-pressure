@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\ORM\TableRegistry;
 use App\Lib\Api\ApiPaginator;
 use Cake\Http\Exception\MethodNotAllowedException;
 use Cake\Http\Exception\NotFoundException;
+use Cake\ORM\TableRegistry;
 
-class MeasurementsController extends AppController
-{
+class MeasurementsController extends AppController {
 
-    public function index()
-    {
+    public function index() {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -43,8 +41,7 @@ class MeasurementsController extends AppController
         $this->viewBuilder()->setOption('serialize', ['measurements']);
     }
 
-    public function add()
-    {
+    public function add() {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -68,8 +65,7 @@ class MeasurementsController extends AppController
     }
 
 
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -109,8 +105,7 @@ class MeasurementsController extends AppController
     }
 
 
-    public function delete()
-    {
+    public function delete() {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }

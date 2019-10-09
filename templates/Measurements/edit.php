@@ -14,7 +14,8 @@
                         <label for="systolic" class="col-form-label">
                             <?= __('Systolic (mmHg)') ?>
                         </label>
-                        <input type="number" class="form-control" id="systolic" min="0" placeholder="120" ng-model="currentEditMeasurement.systolic">
+                        <input type="number" class="form-control" id="systolic" min="0" placeholder="120"
+                               ng-model="currentEditMeasurement.systolic">
                         <div ng-repeat="error in errors.systolic" class="error-feedback">
                             {{error}}
                         </div>
@@ -24,7 +25,8 @@
                         <label for="diastolic" class="col-form-label">
                             <?= __('Diastolic (mmHg)') ?>
                         </label>
-                        <input type="number" class="form-control" id="diastolic" min="0" placeholder="80" ng-model="currentEditMeasurement.diastolic">
+                        <input type="number" class="form-control" id="diastolic" min="0" placeholder="80"
+                               ng-model="currentEditMeasurement.diastolic">
                         <div ng-repeat="error in errors.diastolic" class="error-feedback">
                             {{error}}
                         </div>
@@ -34,7 +36,8 @@
                         <label for="heart_rate" class="col-form-label">
                             <?= __('Heart rate') ?>
                         </label>
-                        <input type="number" class="form-control" id="heart_rate" min="0" placeholder="60" ng-model="currentEditMeasurement.heart_rate">
+                        <input type="number" class="form-control" id="heart_rate" min="0" placeholder="60"
+                               ng-model="currentEditMeasurement.heart_rate">
                         <div ng-repeat="error in errors.diastolic" class="error-feedback">
                             {{error}}
                         </div>

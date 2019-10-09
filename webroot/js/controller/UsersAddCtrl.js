@@ -1,6 +1,6 @@
-app.controller("UsersAddCtrl", function ($scope, $http, $location) {
+app.controller("UsersAddCtrl", function($scope, $http, $location){
 
-    $scope.resetForm = function () {
+    $scope.resetForm = function(){
         $scope.post = {
             username: null,
             password: null,
@@ -9,24 +9,24 @@ app.controller("UsersAddCtrl", function ($scope, $http, $location) {
         };
     };
 
-    $scope.requestCsrf = function () {
+    $scope.requestCsrf = function(){
         $http.get("/pages/csrf.json",
             $scope.post
-        ).then(function (result) {
+        ).then(function(result){
             return;
         });
     };
 
-    $scope.submit = function () {
+    $scope.submit = function(){
         $http.post("/users/add.json",
             $scope.post
-        ).then(function (result) {
+        ).then(function(result){
             $scope.errors = {};
             console.log('Data saved successfully');
             $location.path("/Users");
-        }, function errorCallback(result) {
+        }, function errorCallback(result){
             $scope.requestCsrf();
-            if (result.data.hasOwnProperty('error')) {
+            if(result.data.hasOwnProperty('error')){
                 $scope.errors = result.data.error;
             }
         });

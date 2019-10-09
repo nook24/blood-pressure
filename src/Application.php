@@ -164,8 +164,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // using it's second constructor argument:
             // `new RoutingMiddleware($this, '_cake_routes_')`
             ->add(new RoutingMiddleware($this))
-
-
             ->add(new AuthorizationMiddleware($this))
             ->add(new RequestAuthorizationMiddleware());
 

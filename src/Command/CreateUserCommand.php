@@ -14,8 +14,7 @@ use Cake\ORM\TableRegistry;
 /**
  * CreateUser command.
  */
-class CreateUserCommand extends Command
-{
+class CreateUserCommand extends Command {
     /**
      * Hook method for defining this command's option parser.
      *
@@ -24,8 +23,7 @@ class CreateUserCommand extends Command
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser The built parser.
      */
-    public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
-    {
+    public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser {
         $parser = parent::buildOptionParser($parser);
 
         return $parser;
@@ -38,8 +36,7 @@ class CreateUserCommand extends Command
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return null|int The exit code or null for success
      */
-    public function execute(Arguments $args, ConsoleIo $io): ?int
-    {
+    public function execute(Arguments $args, ConsoleIo $io): ?int {
         $username = $io->ask(
             __('Please enter a new username')
         );

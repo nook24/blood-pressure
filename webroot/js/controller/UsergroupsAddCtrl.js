@@ -1,6 +1,6 @@
-app.controller("UsergroupsAddCtrl", function ($scope, $http, $location) {
+app.controller("UsergroupsAddCtrl", function($scope, $http, $location){
 
-    $scope.resetForm = function () {
+    $scope.resetForm = function(){
         $scope.post = {
             Usergroup: {
                 name: null
@@ -9,10 +9,10 @@ app.controller("UsergroupsAddCtrl", function ($scope, $http, $location) {
         };
     };
 
-    $scope.loadAcos = function () {
+    $scope.loadAcos = function(){
         $http.get("/usergroups/add.json",
             {}
-        ).then(function (result) {
+        ).then(function(result){
             $scope.acos = result.data.acos;
 
             for(var aco in $scope.acos){
@@ -26,24 +26,24 @@ app.controller("UsergroupsAddCtrl", function ($scope, $http, $location) {
         });
     };
 
-    $scope.requestCsrf = function () {
+    $scope.requestCsrf = function(){
         $http.get("/pages/csrf.json",
             $scope.post
-        ).then(function (result) {
+        ).then(function(result){
             return;
         });
     };
 
-    $scope.submit = function () {
+    $scope.submit = function(){
         $http.post("/usergroups/add.json",
             $scope.post
-        ).then(function (result) {
+        ).then(function(result){
             $scope.errors = {};
             console.log('Data saved successfully');
             $location.path("/Usergroups");
-        }, function errorCallback(result) {
+        }, function errorCallback(result){
             $scope.requestCsrf();
-            if (result.data.hasOwnProperty('error')) {
+            if(result.data.hasOwnProperty('error')){
                 $scope.errors = result.data.error;
             }
         });

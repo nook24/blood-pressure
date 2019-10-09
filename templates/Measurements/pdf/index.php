@@ -12,31 +12,31 @@
     <div class="card-body">
         <table class="table table-hover">
             <thead>
-                <tr>
-                    <th scope="col"><?= __('Date') ?></th>
-                    <th scope="col"><?= __('Systolic (mmHg)') ?></th>
-                    <th scope="col"><?= __('Diastolic (mmHg)') ?></th>
-                    <th scope="col"><?= __('Heart rate') ?></th>
+            <tr>
+                <th scope="col"><?= __('Date') ?></th>
+                <th scope="col"><?= __('Systolic (mmHg)') ?></th>
+                <th scope="col"><?= __('Diastolic (mmHg)') ?></th>
+                <th scope="col"><?= __('Heart rate') ?></th>
             </thead>
             <tbody>
-                <?php foreach ($measurements as $measurement) : ?>
-                    <?php
-                        $class = '';
-                        if ($measurement->get('systolic') >= 130 && $measurement->get('diastolic') >= 80) :
-                            $class = 'table-warning';
-                        endif;
+            <?php foreach ($measurements as $measurement) : ?>
+                <?php
+                $class = '';
+                if ($measurement->get('systolic') >= 130 && $measurement->get('diastolic') >= 80) :
+                    $class = 'table-warning';
+                endif;
 
-                        if ($measurement->get('systolic') >= 140 && $measurement->get('diastolic') >= 90) :
-                            $class = 'table-danger';
-                        endif;
-                        ?>
-                    <tr class="<?= $class ?>">
-                        <td><?= h($measurement->get('created')->format('H:m d.m.Y')); ?></td>
-                        <td><?= h($measurement->get('systolic')) ?></td>
-                        <td><?= h($measurement->get('diastolic')) ?></td>
-                        <td><?= h($measurement->get('heart_rate')) ?></td>
-                    </tr>
-                <?php endforeach; ?>
+                if ($measurement->get('systolic') >= 140 && $measurement->get('diastolic') >= 90) :
+                    $class = 'table-danger';
+                endif;
+                ?>
+                <tr class="<?= $class ?>">
+                    <td><?= h($measurement->get('created')->format('H:m d.m.Y')); ?></td>
+                    <td><?= h($measurement->get('systolic')) ?></td>
+                    <td><?= h($measurement->get('diastolic')) ?></td>
+                    <td><?= h($measurement->get('heart_rate')) ?></td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
 

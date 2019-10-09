@@ -1,21 +1,21 @@
 var app = angular.module("BloodPressure", ["ngRoute"]);
 
-app.factory("httpRequestInterceptor", function ($rootScope, $q) {
+app.factory("httpRequestInterceptor", function($rootScope, $q){
     return {
-        response: function (result) {
-            if (result.data.hasOwnProperty('_csrfToken')) {
+        response: function(result){
+            if(result.data.hasOwnProperty('_csrfToken')){
                 $rootScope._csrfToken = result.data._csrfToken;
             }
             return result || $.then(result)
         },
-        request: function (config) {
-            if (config.method !== 'GET') {
+        request: function(config){
+            if(config.method !== 'GET'){
                 config.headers['X-CSRF-Token'] = $rootScope._csrfToken;
             }
             return config;
         },
-        responseError: function (rejection) {
-            if (rejection.status == 401) {
+        responseError: function(rejection){
+            if(rejection.status == 401){
                 window.location = '/users/login';
             }
             return $q.reject(rejection);
@@ -23,11 +23,11 @@ app.factory("httpRequestInterceptor", function ($rootScope, $q) {
     };
 });
 
-app.config(function ($httpProvider) {
+app.config(function($httpProvider){
     $httpProvider.interceptors.push('httpRequestInterceptor');
 });
 
-app.config(function ($routeProvider) {
+app.config(function($routeProvider){
 
     $routeProvider
         .when("/Measurements", {

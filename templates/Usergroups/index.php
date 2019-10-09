@@ -30,27 +30,28 @@
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
-                    <tr>
-                        <th scope="col"><?= __('#') ?></th>
-                        <th scope="col"><?= __('Name') ?></th>
-                        <th scope="col"><?= __('Actions') ?></th>
+                <tr>
+                    <th scope="col"><?= __('#') ?></th>
+                    <th scope="col"><?= __('Name') ?></th>
+                    <th scope="col"><?= __('Actions') ?></th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="usergroup in usergroups">
-                        <td>{{usergroup.id}}</td>
-                        <td>{{usergroup.name}}</td>
-                        <td>
+                <tr ng-repeat="usergroup in usergroups">
+                    <td>{{usergroup.id}}</td>
+                    <td>{{usergroup.name}}</td>
+                    <td>
 
-                            <a class="btn btn-sm btn-primary" ng-href="/#!Usergroups/edit/{{usergroup.id}}">
-                                <i class="fa fa-pencil-square-o"></i>
-                                <?= __('Edit') ?>
-                            </a>
-                            <button class="btn btn-sm btn-danger" ng-click="askDeleteUsergroup(usergroup)" ng-show="usergroup.id !== myself">
-                                <i class="fa fa-trash-o"></i>
-                                <?= __('Delete') ?>
-                            </button>
-                        </td>
-                    </tr>
+                        <a class="btn btn-sm btn-primary" ng-href="/#!Usergroups/edit/{{usergroup.id}}">
+                            <i class="fa fa-pencil-square-o"></i>
+                            <?= __('Edit') ?>
+                        </a>
+                        <button class="btn btn-sm btn-danger" ng-click="askDeleteUsergroup(usergroup)"
+                                ng-show="usergroup.id !== myself">
+                            <i class="fa fa-trash-o"></i>
+                            <?= __('Delete') ?>
+                        </button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>

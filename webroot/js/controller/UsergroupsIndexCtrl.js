@@ -1,37 +1,37 @@
-app.controller("UsergroupsIndexCtrl", function ($scope, $http) {
+app.controller("UsergroupsIndexCtrl", function($scope, $http){
     $scope.currentPage = 1;
 
     var usergroupToDelete = null;
 
-    $scope.load = function () {
+    $scope.load = function(){
         $http.get("/usergroups/index.json", {
             params: {
                 page: $scope.currentPage
             }
-        }).then(function (result) {
+        }).then(function(result){
             $scope.usergroups = result.data.usergroups;
             $scope.myself = result.data.myself;
             $scope.paging = result.data.paging;
         });
     };
 
-    $scope.askDeleteUsergroup = function (usergroup) {
+    $scope.askDeleteUsergroup = function(usergroup){
         usergroupToDelete = usergroup;
         $('.delete-usergroup-modal-lg').modal('show');
     };
 
-    $scope.delete = function () {
+    $scope.delete = function(){
         $http.post("/usergroups/delete.json", {
             id: usergroupToDelete.id
-        }).then(function (result) {
+        }).then(function(result){
             $scope.load();
             $('.delete-usergroup-modal-lg').modal('hide');
         });
         usergroupToDelete = null;
     };
 
-    $scope.changepage = function (page) {
-        if (page !== $scope.currentPage) {
+    $scope.changepage = function(page){
+        if(page !== $scope.currentPage){
             $scope.currentPage = page;
             $scope.load();
         }

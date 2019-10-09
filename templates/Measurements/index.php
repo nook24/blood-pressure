@@ -33,34 +33,38 @@
         <div class="table-responsive d-none d-md-inline">
             <table class="table table-hover">
                 <thead>
-                    <tr>
-                        <th scope="col"><?= __('Date') ?></th>
-                        <th scope="col"><?= __('Systolic (mmHg)') ?></th>
-                        <th scope="col"><?= __('Diastolic (mmHg)') ?></th>
-                        <th scope="col"><?= __('Heart rate') ?></th>
-                        <th scope="col"><?= __('Actions') ?></th>
+                <tr>
+                    <th scope="col"><?= __('Date') ?></th>
+                    <th scope="col"><?= __('Systolic (mmHg)') ?></th>
+                    <th scope="col"><?= __('Diastolic (mmHg)') ?></th>
+                    <th scope="col"><?= __('Heart rate') ?></th>
+                    <th scope="col"><?= __('Actions') ?></th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="measurement in measurements" ng-class="{'table-warning': isWarning(measurement), 'table-danger': isDanger(measurement)}">
-                        <td>{{measurement.created | date : 'HH:mm dd.MM.yyyy'}}</td>
-                        <td>{{measurement.systolic}}</td>
-                        <td>{{measurement.diastolic}}</td>
-                        <td>{{measurement.heart_rate}}</td>
-                        <td>
-                            <span class="text-primary d-lg-none" ng-click="editMeasurement(measurement, load)" title="<?= __('Edit') ?>">
+                <tr ng-repeat="measurement in measurements"
+                    ng-class="{'table-warning': isWarning(measurement), 'table-danger': isDanger(measurement)}">
+                    <td>{{measurement.created | date : 'HH:mm dd.MM.yyyy'}}</td>
+                    <td>{{measurement.systolic}}</td>
+                    <td>{{measurement.diastolic}}</td>
+                    <td>{{measurement.heart_rate}}</td>
+                    <td>
+                            <span class="text-primary d-lg-none" ng-click="editMeasurement(measurement, load)"
+                                  title="<?= __('Edit') ?>">
                                 <i class="fa fa-pencil-square-o"></i>
                             </span>
 
-                            <button class="btn btn-sm btn-primary d-none d-lg-inline" ng-click="editMeasurement(measurement, load)">
-                                <i class="fa fa-pencil-square-o"></i>
-                                <?= __('Edit') ?>
-                            </button>
-                            <button class="btn btn-sm btn-danger d-none d-lg-inline" ng-click="askDeleteMeasurement(measurement)">
-                                <i class="fa fa-trash-o"></i>
-                                <?= __('Delete') ?>
-                            </button>
-                        </td>
-                    </tr>
+                        <button class="btn btn-sm btn-primary d-none d-lg-inline"
+                                ng-click="editMeasurement(measurement, load)">
+                            <i class="fa fa-pencil-square-o"></i>
+                            <?= __('Edit') ?>
+                        </button>
+                        <button class="btn btn-sm btn-danger d-none d-lg-inline"
+                                ng-click="askDeleteMeasurement(measurement)">
+                            <i class="fa fa-trash-o"></i>
+                            <?= __('Delete') ?>
+                        </button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -69,7 +73,8 @@
             <div ng-repeat="measurement in measurements">
                 <div class="row">
                     <div class="col-12 text-right">
-                        <span class="text-primary" ng-click="editMeasurement(measurement, load)" title="<?= __('Edit') ?>">
+                        <span class="text-primary" ng-click="editMeasurement(measurement, load)"
+                              title="<?= __('Edit') ?>">
                             <i class="fa fa-pencil-square-o"></i>
                         </span>
                     </div>
@@ -80,19 +85,21 @@
                     <dd class="col-6">{{measurement.created | date : 'HH:mm dd.MM.yyyy'}}</dd>
 
                     <dt class="col-6"><?= __('Systolic') ?>:</dt>
-                    <dd class="col-6" ng-class="{'text-bold text-warning': isWarning(measurement), 'text-bold text-danger': isDanger(measurement)}">
+                    <dd class="col-6"
+                        ng-class="{'text-bold text-warning': isWarning(measurement), 'text-bold text-danger': isDanger(measurement)}">
                         {{measurement.systolic}}
                     </dd>
 
                     <dt class="col-6"><?= __('Diastolic') ?>:</dt>
-                    <dd class="col-6" ng-class="{'text-bold text-warning': isWarning(measurement), 'text-bold text-danger': isDanger(measurement)}">
+                    <dd class="col-6"
+                        ng-class="{'text-bold text-warning': isWarning(measurement), 'text-bold text-danger': isDanger(measurement)}">
                         {{measurement.diastolic}}
                     </dd>
 
                     <dt class="col-6"><?= __('Heart rate') ?>:</dt>
                     <dd class="col-6">{{measurement.heart_rate}}</dd>
                 </dl>
-                <hr />
+                <hr/>
             </div>
         </div>
 

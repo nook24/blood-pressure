@@ -5,8 +5,7 @@ namespace App\Lib\Api;
 use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
 
-class ApiPaginator
-{
+class ApiPaginator {
 
     /**
      * Current Controller
@@ -46,8 +45,7 @@ class ApiPaginator
      */
     private $current = 0;
 
-    public function __construct(Controller $Controller, ServerRequest $request)
-    {
+    public function __construct(Controller $Controller, ServerRequest $request) {
         $this->Controller = $Controller;
 
         $this->limit = 25;
@@ -61,65 +59,57 @@ class ApiPaginator
     /**
      * @param int $page
      */
-    public function setPage($page)
-    {
+    public function setPage($page) {
         $this->page = $page;
     }
 
     /**
      * @param int $limit
      */
-    public function setLimit($limit)
-    {
+    public function setLimit($limit) {
         $this->limit = $limit;
     }
 
     /**
      * @param $current
      */
-    public function setCurrent($current)
-    {
+    public function setCurrent($current) {
         $this->current = $current;
     }
 
     /**
      * @return int
      */
-    public function getPage()
-    {
+    public function getPage() {
         return $this->page;
     }
 
     /**
      * @return int
      */
-    public function getOffset()
-    {
+    public function getOffset() {
         if ($this->page === 1) {
             return 0;
         }
-        return (int) $this->limit * ($this->page - 1);
+        return (int)$this->limit * ($this->page - 1);
     }
 
     /**
      * @return int
      */
-    public function getLimit()
-    {
+    public function getLimit() {
         return $this->limit;
     }
 
     /**
      * @return int
      */
-    public function getPages()
-    {
+    public function getPages() {
         return $this->pages;
     }
 
-    public function setCountResult($count)
-    {
-        $this->count = (int) $count;
+    public function setCountResult($count) {
+        $this->count = (int)$count;
         if ($this->count === 0) {
             $this->pages = 1;
         } else {
@@ -130,8 +120,7 @@ class ApiPaginator
     /**
      * @return bool
      */
-    private function hasPrevPage()
-    {
+    private function hasPrevPage() {
         if ($this->page !== 1) {
             return true;
         }
@@ -142,8 +131,7 @@ class ApiPaginator
     /**
      * @return bool
      */
-    private function hasNextPage()
-    {
+    private function hasNextPage() {
         /**
          * $this->page = current page
          * $this->current = number of current items
@@ -158,10 +146,9 @@ class ApiPaginator
         return false;
     }
 
-    public function getPagination()
-    {
+    public function getPagination() {
         return [
-            'page'       => (int) $this->page,
+            'page'       => (int)$this->page,
             'current'    => $this->current,
             'count'      => $this->count,
             'prevPage'   => $this->hasPrevPage(),
@@ -174,8 +161,7 @@ class ApiPaginator
         ];
     }
 
-    public function paginate()
-    {
+    public function paginate() {
         $this->Controller->set('paging', $this->getPagination());
     }
 }

@@ -1,4 +1,4 @@
-app.directive('newMeasurement', function ($http) {
+app.directive('newMeasurement', function($http){
     return {
         restrict: 'E',
         templateUrl: '/measurements/add.html',
@@ -6,8 +6,8 @@ app.directive('newMeasurement', function ($http) {
             callback: '='
         },
 
-        controller: function ($scope) {
-            $scope.resetForm = function () {
+        controller: function($scope){
+            $scope.resetForm = function(){
                 $scope.post = {
                     systolic: null,
                     diastolic: null,
@@ -15,16 +15,16 @@ app.directive('newMeasurement', function ($http) {
                 };
             };
 
-            $scope.submit = function () {
+            $scope.submit = function(){
                 $http.post("/measurements/add.json",
                     $scope.post
-                ).then(function (result) {
+                ).then(function(result){
                     $scope.errors = {};
                     console.log('Data saved successfully');
                     $('.new-measurement-modal-lg').modal('hide');
                     $scope.callback();
-                }, function errorCallback(result) {
-                    if (result.data.hasOwnProperty('error')) {
+                }, function errorCallback(result){
+                    if(result.data.hasOwnProperty('error')){
                         $scope.errors = result.data.error;
                     }
                 });
@@ -34,6 +34,7 @@ app.directive('newMeasurement', function ($http) {
             $scope.resetForm();
         },
 
-        link: function ($scope, element, attr) { }
+        link: function($scope, element, attr){
+        }
     };
 });

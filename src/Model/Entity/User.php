@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use App\Lib\Api\ApiPaginator;
 use Cake\ORM\Entity;
 
 /**

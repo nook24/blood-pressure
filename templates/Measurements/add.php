@@ -1,4 +1,5 @@
-<button class="btn btn-sm btn-success btn-icon-split float-right" data-toggle="modal" data-target=".new-measurement-modal-lg" ng-click="resetForm()">
+<button class="btn btn-sm btn-success btn-icon-split float-right" data-toggle="modal"
+        data-target=".new-measurement-modal-lg" ng-click="resetForm()">
     <span class="icon text-white-50">
         <i class="fa fa-plus"></i>
     </span>
@@ -21,7 +22,8 @@
                         <label for="systolic" class="col-form-label">
                             <?= __('Systolic (mmHg)') ?>
                         </label>
-                        <input type="number" class="form-control" id="systolic" min="0" placeholder="120" ng-model="post.systolic">
+                        <input type="number" class="form-control" id="systolic" min="0" placeholder="120"
+                               ng-model="post.systolic">
                         <div ng-repeat="error in errors.systolic" class="error-feedback">
                             {{error}}
                         </div>
@@ -31,7 +33,8 @@
                         <label for="diastolic" class="col-form-label">
                             <?= __('Diastolic (mmHg)') ?>
                         </label>
-                        <input type="number" class="form-control" id="diastolic" min="0" placeholder="80" ng-model="post.diastolic">
+                        <input type="number" class="form-control" id="diastolic" min="0" placeholder="80"
+                               ng-model="post.diastolic">
                         <div ng-repeat="error in errors.diastolic" class="error-feedback">
                             {{error}}
                         </div>
@@ -41,7 +44,8 @@
                         <label for="heart_rate" class="col-form-label">
                             <?= __('Heart rate') ?>
                         </label>
-                        <input type="number" class="form-control" id="heart_rate" min="0" placeholder="60" ng-model="post.heart_rate">
+                        <input type="number" class="form-control" id="heart_rate" min="0" placeholder="60"
+                               ng-model="post.heart_rate">
                         <div ng-repeat="error in errors.diastolic" class="error-feedback">
                             {{error}}
                         </div>

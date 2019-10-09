@@ -5,15 +5,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
-use App\Lib\Api\ApiPaginator;
-use Cake\Http\Exception\MethodNotAllowedException;
-use Cake\Http\Exception\NotFoundException;
 
-class DashboardsController extends AppController
-{
+class DashboardsController extends AppController {
 
-    public function index()
-    {
+    public function index() {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -23,8 +18,8 @@ class DashboardsController extends AppController
 
         $MeasurementsTable = TableRegistry::getTableLocator()->get('Measurements');
 
-        $start = (int) $this->request->getQuery('start');
-        $end = (int) $this->request->getQuery('end');
+        $start = (int)$this->request->getQuery('start');
+        $end = (int)$this->request->getQuery('end');
         if (!is_numeric($start) || $start < 10000) {
             $start = time();
         }
@@ -36,8 +31,8 @@ class DashboardsController extends AppController
         $entities = $MeasurementsTable->getMeasurementsDashboard($start, $end, $user->get('id'));
 
         $chartData = [
-            'labels' => [],
-            'systolic' => [],
+            'labels'    => [],
+            'systolic'  => [],
             'diastolic' => []
         ];
 
@@ -57,14 +52,14 @@ class DashboardsController extends AppController
             }
 
             $events[] = [
-                'id' => $entity->get('id'),
-                'title' => sprintf(
+                'id'         => $entity->get('id'),
+                'title'      => sprintf(
                     '%s/%s/%s',
                     $entity->get('systolic'),
                     $entity->get('diastolic'),
                     $entity->get('heart_rate')
                 ),
-                'start' => gmdate('Y-m-d H:i:s', $entity->created->timestamp),
+                'start'      => gmdate('Y-m-d H:i:s', $entity->created->timestamp),
                 'classNames' => $classes
             ];
         }
