@@ -74,6 +74,8 @@
 
             <div class="modal-body">
                 <?= __('Do you really want to delete the selected record?') ?>
+                <br />
+                <?= __('This will also delete all users associated with this user group!') ?>
             </div>
 
             <div class="modal-footer">

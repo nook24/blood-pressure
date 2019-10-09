@@ -44,8 +44,10 @@ class UsersTable extends Table {
 
         $this->belongsTo('Usergroups');
 
-        $this->hasMany('Measurements')
-            ->setDependent(true);
+        $this->hasMany('Measurements', [
+            'dependent'  => true,
+            'foreignKey' => 'user_id',
+        ]);
     }
 
     /**
@@ -78,6 +80,12 @@ class UsersTable extends Table {
             ->scalar('lastname')
             ->maxLength('lastname', 255)
             ->allowEmptyString('lastname');
+
+        $validator
+            ->scalar('usergroup_id')
+            ->requirePresence('usergroup_id', 'create')
+            ->greaterThan('usergroup_id', 0)
+            ->notEmptyString('usergroup_id');
 
         return $validator;
     }

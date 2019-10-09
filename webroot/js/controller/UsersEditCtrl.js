@@ -18,6 +18,14 @@ app.controller("UsersEditCtrl", function($scope, $http, $location, $routeParams)
         });
     };
 
+    $scope.loadUsergroups = function(){
+        $http.get("/users/loadUsergroups.json",
+            {}
+        ).then(function(result){
+            $scope.usergroups = result.data.usergroups;
+        });
+    };
+
     $scope.submit = function(){
         $http.post("/users/edit/" + $scope.id + ".json",
             $scope.post
@@ -34,6 +42,7 @@ app.controller("UsersEditCtrl", function($scope, $http, $location, $routeParams)
     };
 
     //Reset form on page load
+    $scope.loadUsergroups();
     $scope.load();
 
 });

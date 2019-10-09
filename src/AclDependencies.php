@@ -51,6 +51,7 @@ class AclDependencies {
 
         // Add dependencies
         $this->dependency('Users', 'edit', 'Users', 'loadUsergroups');
+        $this->dependency('Users', 'add', 'Users', 'loadUsergroups');
     }
 
     /**

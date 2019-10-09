@@ -5,7 +5,8 @@ app.controller("UsersAddCtrl", function($scope, $http, $location){
             username: null,
             password: null,
             firstname: null,
-            lastname: null
+            lastname: null,
+            usergroup_id: null
         };
     };
 
@@ -14,6 +15,14 @@ app.controller("UsersAddCtrl", function($scope, $http, $location){
             $scope.post
         ).then(function(result){
             return;
+        });
+    };
+
+    $scope.loadUsergroups = function(){
+        $http.get("/users/loadUsergroups.json",
+            {}
+        ).then(function(result){
+            $scope.usergroups = result.data.usergroups;
         });
     };
 
@@ -35,5 +44,6 @@ app.controller("UsersAddCtrl", function($scope, $http, $location){
     //Reset form on page load
     $scope.resetForm();
     $scope.requestCsrf();
+    $scope.loadUsergroups();
 
 });

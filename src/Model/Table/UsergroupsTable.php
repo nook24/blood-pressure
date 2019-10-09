@@ -42,7 +42,9 @@ class UsergroupsTable extends Table {
         $this->addBehavior('Acl.Acl', ['requester']);
 
         $this->hasMany('Users', [
-            'foreignKey' => 'usergroup_id',
+            'dependent'        => true,
+            'cascadeCallbacks' => true,
+            'foreignKey'       => 'usergroup_id',
         ]);
 
         $this->hasOne('Aros', [

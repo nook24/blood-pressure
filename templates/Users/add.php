@@ -16,6 +16,20 @@
     <div class="card-body">
 
         <form ng-submit="submit()">
+
+            <div class="form-group" ng-class="{'has-error': errors.usergroup_id}">
+                <label for="usergroup_id" class="col-form-label">
+                    <?= __('User group') ?>
+                </label>
+                <select class="form-control" id="usergroup_id"
+                        ng-options="usergroup.key as usergroup.value for usergroup in usergroups"
+                        ng-model="post.usergroup_id">
+                </select>
+                <div ng-repeat="error in errors.usergroup_id" class="error-feedback">
+                    {{error}}
+                </div>
+            </div>
+
             <div class="form-group" ng-class="{'has-error': errors.username}">
                 <label for="username" class="col-form-label">
                     <?= __('Username') ?>

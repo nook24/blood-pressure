@@ -6,6 +6,7 @@ namespace App\Controller;
 
 
 use App\Lib\Api\ApiPaginator;
+use App\Model\Table\UsergroupsTable;
 use App\Model\Table\UsersTable;
 use Authentication\Authenticator\ResultInterface;
 use Authentication\Controller\Component\AuthenticationComponent;
@@ -171,10 +172,22 @@ class UsersController extends AppController {
         $this->viewBuilder()->setOption('serialize', ['success']);
     }
 
-    /**
-     * This is just an example method to show AclDependencies
-     */
     public function loadUsergroups() {
+        /** @var UsergroupsTable $UsergroupsTable */
+        $UsergroupsTable = TableRegistry::getTableLocator()->get('Usergroups');
 
+        $_usergroups = $UsergroupsTable->find('list')->toArray();
+
+        //Rewrite hashmap to array because javascript will break the "orderd hashmap" because hashmaps have no order
+        $usergroups = [];
+        foreach($_usergroups as $id => $name){
+            $usergroups[] = [
+                'key' => $id,
+                'value' => $name
+            ];
+        }
+
+        $this->set('usergroups', $usergroups);
+        $this->viewBuilder()->setOption('serialize', ['usergroups']);
     }
 }
