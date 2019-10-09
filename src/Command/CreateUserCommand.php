@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use Acl\Controller\Component\AclComponent;
+use Acl\Model\Table\AcosTable;
+use App\Model\Table\UsergroupsTable;
 use App\Model\Table\UsersTable;
 use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Controller\ComponentRegistry;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -37,6 +42,38 @@ class CreateUserCommand extends Command {
      * @return null|int The exit code or null for success
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int {
+        $io->out(__(
+            'Checking for existing user group'
+        ));
+
+        /** @var UsergroupsTable $UsergroupsTable */
+        $UsergroupsTable = TableRegistry::getTableLocator()->get('Usergroups');
+        try {
+            $usergroup = $UsergroupsTable->find()->firstOrFail();
+            $io->success(__('Found user group {0}.', $usergroup->get('name')));
+        } catch (RecordNotFoundException $e) {
+            $io->out(__(
+                'No user group found. I will create the user group "Admins" for you...'
+            ));
+
+            $usergroup = $UsergroupsTable->newEmptyEntity();
+            $usergroup->set('name', 'Admins');
+
+            $UsergroupsTable->save($usergroup);
+        }
+
+        $io->out('Grant all permissions to user group');
+        /** @var AcosTable $AcosTable */
+        $AcosTable = TableRegistry::getTableLocator()->get('Acl.Acos');
+        $registry = new ComponentRegistry();
+        $Acl = new AclComponent($registry);
+
+        $acos = $AcosTable->find()->all();
+        foreach ($acos as $aco) {
+            $Acl->allow($usergroup->get('id'), $aco->get('id'), '*');
+        }
+
+
         $username = $io->ask(
             __('Please enter a new username')
         );
@@ -59,8 +96,9 @@ class CreateUserCommand extends Command {
 
         $user = $UsersTable->newEmptyEntity();
         $user = $UsersTable->patchEntity($user, [
-            'username' => $username,
-            'password' => $password
+            'username'     => $username,
+            'password'     => $password,
+            'usergroup_id' => $usergroup->get('id')
         ]);
 
         $UsersTable->save($user);
@@ -69,7 +107,7 @@ class CreateUserCommand extends Command {
             return 1;
         }
 
-        $io->success(__('New user created successfully.'));
+        $io->success(__('New user created successfully with user group {0}.', $usergroup->get('name')));
         return 0;
     }
 }

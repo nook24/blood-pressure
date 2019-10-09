@@ -157,6 +157,9 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ]))
 
 
+            ->add(new AuthorizationMiddleware($this))
+            ->add(new RequestAuthorizationMiddleware())
+
             // Add routing middleware.
             // If you have a large number of routes connected, turning on routes
             // caching in production could improve performance. For that when
@@ -164,8 +167,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // using it's second constructor argument:
             // `new RoutingMiddleware($this, '_cake_routes_')`
             ->add(new RoutingMiddleware($this))
-            ->add(new AuthorizationMiddleware($this))
-            ->add(new RequestAuthorizationMiddleware());
+        ;
 
         return $middlewareQueue;
     }

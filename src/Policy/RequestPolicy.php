@@ -21,10 +21,10 @@ class RequestPolicy implements RequestPolicyInterface {
      * @return bool
      */
     public function canAccess($identity, ServerRequest $request) {
-        //debug($identity);die();
+        debug('????');die();
         $controller = $request->getParam('controller');
         $action = $request->getParam('action');
-        $plugin = $request->getParam('plugin');
+        $plugin = $request->getParam('plugin'); //not used
 
         $Collection = new ComponentRegistry();
         $Acl = new AclComponent($Collection);

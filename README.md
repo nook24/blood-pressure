@@ -95,7 +95,12 @@ bin/cake migrations migrate -p Acl
 bin/cake migrations migrate
 ```
 
-### Create user
+### Sync Acos
+```
+bin/cake acl_extras aco_sync
+```
+
+### Create first user
 ```
 bin/cake create_user
 ```
