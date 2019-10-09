@@ -28,7 +28,7 @@ class RequestPolicy implements RequestPolicyInterface {
 
         if ($identity === null) {
             //User is not logged in!
-            if (mb_strtolower($controller) === 'users' && mb_strtolower($action) === 'login') {
+            if (strtolower($controller) === 'users' && strtolower($action) === 'login') {
                 return true;
             }
 
