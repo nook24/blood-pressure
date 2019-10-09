@@ -13,6 +13,7 @@ class Initial extends AbstractMigration {
             'primary_key' => ['id']
         ])
             ->addColumn('id', 'integer', [
+                'autoIncrement' => true,
                 'default' => null,
                 'limit'   => 11,
                 'null'    => false,
