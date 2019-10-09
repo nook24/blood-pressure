@@ -149,25 +149,24 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 Configure::read('Security.cookieKey')
             ))
 
-            //Add the authentication middleware
-            //Response a 403 to .json requests and redirect .html requests to login page
-            ->add(new AppAuthenticationMiddleware($this, [
-                //Only redirect .html requests if login is invalid - no json requests
-                'htmlUnauthenticatedRedirect' => '/users/login'
-            ]))
-
-
-            ->add(new AuthorizationMiddleware($this))
-            ->add(new RequestAuthorizationMiddleware())
-
             // Add routing middleware.
             // If you have a large number of routes connected, turning on routes
             // caching in production could improve performance. For that when
             // creating the middleware instance specify the cache config name by
             // using it's second constructor argument:
             // `new RoutingMiddleware($this, '_cake_routes_')`
+            //
+            // RoutingMiddleware will also parse URL and make $request->getParam('controller') work
             ->add(new RoutingMiddleware($this))
-        ;
+
+            //Add the authentication middleware
+            //Response a 403 to .json requests and redirect .html requests to login page
+            ->add(new AppAuthenticationMiddleware($this, [
+                //Only redirect .html requests if login is invalid - no json requests
+                'htmlUnauthenticatedRedirect' => '/users/login'
+            ]))
+            ->add(new AuthorizationMiddleware($this))
+            ->add(new RequestAuthorizationMiddleware());
 
         return $middlewareQueue;
     }

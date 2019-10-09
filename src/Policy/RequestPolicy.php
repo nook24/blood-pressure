@@ -5,6 +5,7 @@ namespace App\Policy;
 
 use Acl\Controller\Component\AclComponent;
 use Acl\Model\Table\ArosTable;
+use Authentication\Authenticator\UnauthenticatedException;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Exception\SecurityException;
@@ -21,10 +22,18 @@ class RequestPolicy implements RequestPolicyInterface {
      * @return bool
      */
     public function canAccess($identity, ServerRequest $request) {
-        debug('????');die();
         $controller = $request->getParam('controller');
         $action = $request->getParam('action');
         $plugin = $request->getParam('plugin'); //not used
+
+        if ($identity === null) {
+            //User is not logged in!
+            if (mb_strtolower($controller) === 'users' && mb_strtolower($action) === 'login') {
+                return true;
+            }
+
+            throw new UnauthenticatedException();
+        }
 
         $Collection = new ComponentRegistry();
         $Acl = new AclComponent($Collection);
@@ -43,7 +52,7 @@ class RequestPolicy implements RequestPolicyInterface {
         }
 
         // Uncomment to disable ACL permission checks
-        return true;
+        // return true;
 
         //debug($Acl->check(['Usergroups' => ['id' => $usergroupId]], "$controller/$action"));die();
         return $Acl->check(['Usergroups' => ['id' => $usergroupId]], "$controller/$action");
