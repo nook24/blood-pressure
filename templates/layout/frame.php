@@ -21,12 +21,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?php //$this->Html->css('milligram.min.css') 
+    <?php //$this->Html->css('milligram.min.css')
     ?>
-    <?php //$this->Html->css('cake.css') 
+    <?php //$this->Html->css('cake.css')
     ?>
 
-    <?php // echo $this->Html->css('/node_modules/bootstrap/dist/css/bootstrap.min.css') 
+    <?php // echo $this->Html->css('/node_modules/bootstrap/dist/css/bootstrap.min.css')
     ?>
     <?= $this->Html->css('/node_modules/chart.js/dist/Chart.min.css') ?>
     <?= $this->Html->css('/css/sb-admin-2.min.css') ?>
@@ -52,10 +52,16 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('/js/controller/MenuCtrl.js') ?>
 
     <?= $this->Html->script('/js/controller/MeasurementsIndexCtrl.js') ?>
+
     <?= $this->Html->script('/js/controller/UsersIndexCtrl.js') ?>
     <?= $this->Html->script('/js/controller/UsersAddCtrl.js') ?>
     <?= $this->Html->script('/js/controller/UsersEditCtrl.js') ?>
+
     <?= $this->Html->script('/js/controller/DashboardsIndexCtrl.js') ?>
+
+    <?= $this->Html->script('/js/controller/UsergroupsIndexCtrl.js') ?>
+    <?= $this->Html->script('/js/controller/UsergroupsAddCtrl.js') ?>
+    <?= $this->Html->script('/js/controller/UsergroupsEditCtrl.js') ?>
 
     <?= $this->Html->script('/js/directives/NewMeasurementDirective.js') ?>
     <?= $this->Html->script('/js/directives/EditMeasurementDirective.js') ?>
@@ -100,6 +106,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <a class="nav-link" ng-href="#!Users">
                     <i class="fa fa-user"></i>
                     <span><?= __('Users') ?></span>
+                </a>
+            </li>
+
+            <li class="nav-item" ng-class="{'active': isActive('/Usergroups')}">
+                <a class="nav-link" ng-href="#!Usergroups">
+                    <i class="fa fa-users"></i>
+                    <span><?= __('User groups') ?></span>
                 </a>
             </li>
 

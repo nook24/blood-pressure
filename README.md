@@ -91,6 +91,7 @@ GRANT ALL PRIVILEGES ON `bloodpressure`.* TO 'bloodpressure'@'localhost';
 
 #### Import database using migration
 ```
+bin/cake migrations migrate -p Acl
 bin/cake migrations migrate
 ```
 

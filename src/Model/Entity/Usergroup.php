@@ -3,19 +3,17 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use App\Lib\Api\ApiPaginator;
 use Cake\ORM\Entity;
 
 /**
- * User Entity
+ * Usergroup Entity
  *
  * @property int $id
- * @property string|null $username
- * @property string|null $password
- * @property string|null $firstname
- * @property string|null $lastname
+ * @property string|null $name
+ *
+ * @property \App\Model\Entity\User[] $users
  */
-class User extends Entity {
+class Usergroup extends Entity {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -26,19 +24,11 @@ class User extends Entity {
      * @var array
      */
     protected $_accessible = [
-        'username'  => true,
-        'password'  => true,
-        'firstname' => true,
-        'lastname'  => true,
+        'name'  => true,
+        'users' => true,
     ];
 
-    /**
-     * Fields that are excluded from JSON versions of the entity.
-     *
-     * @var array
-     */
-    protected $_hidden = [
-        'password',
-    ];
-
+    public function parentNode() {
+        return null;
+    }
 }

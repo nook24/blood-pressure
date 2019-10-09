@@ -34,6 +34,7 @@ app.config(function ($routeProvider) {
             templateUrl: "/Measurements/index.html",
             controller: "MeasurementsIndexCtrl"
         })
+
         .when("/Users", {
             templateUrl: "/Users/index.html",
             controller: "UsersIndexCtrl"
@@ -46,6 +47,20 @@ app.config(function ($routeProvider) {
             templateUrl: "/Users/edit.html",
             controller: "UsersEditCtrl"
         })
+
+        .when("/Usergroups", {
+            templateUrl: "/Usergroups/index.html",
+            controller: "UsergroupsIndexCtrl"
+        })
+        .when("/Usergroups/add", {
+            templateUrl: "/Usergroups/add.html",
+            controller: "UsergroupsAddCtrl"
+        })
+        .when("/Usergroups/edit/:id", {
+            templateUrl: "/Usergroups/edit.html",
+            controller: "UsergroupsEditCtrl"
+        })
+
         .when("/Dashboard", {
             templateUrl: "/Dashboards/index.html",
             controller: "DashboardsIndexCtrl"

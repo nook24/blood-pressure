@@ -11,14 +11,6 @@ class Initial extends AbstractMigration
     {
         if($this->hasTable('measurements') === false){
             $this->table('measurements')
-                ->addColumn('id', 'integer', [
-                    'autoIncrement' => true,
-                    'default' => null,
-                    'limit' => 11,
-                    'null' => false,
-                    'signed' => false,
-                ])
-                ->addPrimaryKey(['id'])
                 ->addColumn('systolic', 'integer', [
                     'default' => null,
                     'limit' => 11,

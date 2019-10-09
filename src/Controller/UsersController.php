@@ -5,32 +5,29 @@ declare(strict_types=1);
 namespace App\Controller;
 
 
+use App\Lib\Api\ApiPaginator;
 use App\Model\Table\UsersTable;
 use Authentication\Authenticator\ResultInterface;
 use Authentication\Controller\Component\AuthenticationComponent;
 use Cake\Event\EventInterface;
-use Cake\ORM\TableRegistry;
-use App\Lib\Api\ApiPaginator;
+use Cake\Http\Exception\ConflictException;
 use Cake\Http\Exception\MethodNotAllowedException;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Http\Exception\ConflictException;
+use Cake\ORM\TableRegistry;
 
 /**
  * Class UsersController
  * @package App\Controller
  * @property AuthenticationComponent $Authentication
  */
-class UsersController extends AppController
-{
+class UsersController extends AppController {
 
-    public function beforeFilter(EventInterface $event)
-    {
+    public function beforeFilter(EventInterface $event) {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated(['login']);
     }
 
-    public function login()
-    {
+    public function login() {
         $this->viewBuilder()->setLayout('login');
 
         if ($this->request->is('get')) {
@@ -59,16 +56,14 @@ class UsersController extends AppController
         }
     }
 
-    public function logout()
-    {
+    public function logout() {
         $this->Authentication->logout();
         $this->redirect([
             'action' => 'login'
         ]);
     }
 
-    public function index()
-    {
+    public function index() {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -86,8 +81,7 @@ class UsersController extends AppController
         $this->viewBuilder()->setOption('serialize', ['users', 'myself']);
     }
 
-    public function add()
-    {
+    public function add() {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -111,8 +105,7 @@ class UsersController extends AppController
         $this->viewBuilder()->setOption('serialize', ['user']);
     }
 
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         if ($this->isHtmlRequest()) {
             //Only ship html template
             return;
@@ -148,8 +141,7 @@ class UsersController extends AppController
         }
     }
 
-    public function delete()
-    {
+    public function delete() {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -177,5 +169,12 @@ class UsersController extends AppController
         $this->response->statusCode(400);
         $this->set('success', false);
         $this->viewBuilder()->setOption('serialize', ['success']);
+    }
+
+    /**
+     * This is just an example method to show AclDependencies
+     */
+    public function loadUsergroups() {
+
     }
 }
