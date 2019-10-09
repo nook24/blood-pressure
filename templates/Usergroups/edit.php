@@ -39,7 +39,7 @@
                 <div class="card-body">
                     <div class="row" ng-repeat="aco in acos">
                         <div class="col-12">
-                            <div class="row padding-bottom-15" ng-repeat="controller in aco.children">
+                            <div class="row padding-bottom-15" ng-repeat="controller in aco.children" ng-if="controller.children.length > 0">
                                 <div class="col-xs-12">
                                     <h5>{{controller.alias}}</h5>
                                 </div>
