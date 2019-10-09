@@ -35,6 +35,7 @@
                     <th scope="col"><?= __('Username') ?></th>
                     <th scope="col"><?= __('First name') ?></th>
                     <th scope="col"><?= __('Last name') ?></th>
+                    <th scope="col"><?= __('User group') ?></th>
                     <th scope="col"><?= __('Actions') ?></th>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@
                     <td>{{user.username}}</td>
                     <td>{{user.firstname}}</td>
                     <td>{{user.lastname}}</td>
+                    <td>{{user.usergroup.name}}</td>
                     <td>
 
                         <a class="btn btn-sm btn-primary" ng-href="/#!Users/edit/{{user.id}}">

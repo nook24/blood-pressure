@@ -135,6 +135,9 @@ class UsersTable extends Table {
 
     public function getUsersIndex(ApiPaginator $ApiPaginator): array {
         $query = $this->find()
+            ->contain([
+                'Usergroups'
+            ])
             ->order([
                 'Users.id' => 'ASC'
             ]);
