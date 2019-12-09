@@ -7,6 +7,7 @@ namespace App\Controller;
 
 use Acl\Controller\Component\AclComponent;
 use Acl\Model\Table\AcosTable;
+use Acl\Model\Table\ArosTable;
 use App\AclDependencies;
 use App\Lib\Api\ApiPaginator;
 use App\Model\Table\UsergroupsTable;
@@ -76,6 +77,13 @@ class UsergroupsController extends AppController {
         }
 
         //Save Acos
+        /** @var ArosTable $ArosTable */
+        $ArosTable = TableRegistry::getTableLocator()->get('Acl.Aros');
+        $aro = $ArosTable->find()
+            ->where([
+                'Aros.foreign_key' => $usergroup->get('id')
+            ])
+            ->first();
         $AclDependencies = new AclDependencies();
         $selectedAcos = $this->request->getData('Acos');
         $selectedAcos = $AclDependencies->getDependentAcos($AcosTable, $selectedAcos);
@@ -84,9 +92,9 @@ class UsergroupsController extends AppController {
         $Acl = new AclComponent($registry);
         foreach ($selectedAcos as $acoId => $state) {
             if ($state === 1) {
-                $Acl->allow($usergroup->get('id'), $acoId, '*');
+                $Acl->allow($aro->get('id'), $acoId, '*');
             } else {
-                $Acl->deny($usergroup->get('id'), $acoId, '*');
+                $Acl->deny($aro->get('id'), $acoId, '*');
             }
         }
 
